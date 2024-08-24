@@ -4,6 +4,7 @@ const Treat = () => {
   return (
     <div>
       <p>treat management</p>
+      <p>bls bls bls</p>
     </div>
   )
 }
