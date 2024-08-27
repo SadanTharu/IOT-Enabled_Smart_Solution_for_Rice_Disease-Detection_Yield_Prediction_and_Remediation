@@ -6,7 +6,10 @@ import { Route, Routes } from 'react-router-dom'
 
 import Dashboard from './pages/Dashboard/Dashboard'
 import Disease from './pages/Disease/Disease'
-import Treat from './pages/Treat/Treat'
+
+
+import AddNewRemedies from './pages/Treat/AddNewRemedies'
+
 import User from './pages/User/User'
 import Prediction from './pages/Prediction/Prediction'
 
@@ -25,7 +28,8 @@ const App = () => {
 
           <Route path="/disease" element={<Disease url={url} />}/>
 
-          <Route path="/treat" element={<Treat url={url} />}/>
+
+          <Route path="/AddNewRemedies" element={<AddNewRemedies url={url} />} />
 
           <Route path="/user" element={<User/>}/>
 
