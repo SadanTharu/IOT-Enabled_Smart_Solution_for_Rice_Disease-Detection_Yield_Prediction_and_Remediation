@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './AddNewRemedies.css';
 
 const AddNewRemedies = () => {
@@ -11,18 +13,40 @@ const AddNewRemedies = () => {
         youtubeTutorial: '',
         notes: '',
     });
+    const [image, setImage] = useState(null); // State for the selected image
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setRemediation({ ...remediation, [name]: value });
     };
 
+    const handleImageChange = (e) => {
+        setImage(e.target.files[0]); // Update state with the selected image file
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const formData = new FormData(); // Use FormData to handle file uploads
+        formData.append('diseaseName', remediation.diseaseName);
+        formData.append('symptoms', remediation.symptoms);
+        formData.append('steps', remediation.steps);
+        formData.append('materials', remediation.materials);
+        formData.append('youtubeTutorial', remediation.youtubeTutorial);
+        formData.append('notes', remediation.notes);
+        if (image) {
+            formData.append('image', image); // Append image file
+        }
+
         try {
-            const response = await axios.post('/api/remediations', remediation);
-            console.log('Remediation added:', response.data);
-            // Clear the form or give feedback to the user
+            console.log('Submitting data:', remediation); // Log the data being sent
+            const response = await axios.post('http://localhost:4000/api/remediation', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Set the content type for file upload
+                },
+            });
+            console.log('Response:', response.data); // Log the response
+            toast.success('Remediation added successfully!');
+            // Clear the form after successful submission
             setRemediation({
                 diseaseName: '',
                 symptoms: '',
@@ -31,8 +55,10 @@ const AddNewRemedies = () => {
                 youtubeTutorial: '',
                 notes: '',
             });
+            setImage(null); // Clear the image state
         } catch (error) {
-            console.error('Error adding remediation:', error);
+            console.error('Error response:', error.response); // Log the full error response
+            toast.error('Error adding remediation: ' + (error.response ? error.response.data.error : error.message));
         }
     };
 
@@ -94,8 +120,17 @@ const AddNewRemedies = () => {
                         onChange={handleChange}
                     />
                 </div>
+                <div className="form-group">
+                    <label>Upload Image:</label>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                    />
+                </div>
                 <button type="submit" className="submit-button">Add Remediation</button>
             </form>
+            <ToastContainer />
         </div>
     );
 };

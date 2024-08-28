@@ -1,7 +1,7 @@
 /* General Reset */
 * {
     box-sizing: border-box;
-    margin:0 ;
+    margin: 0;
     padding: 0;
 }
 
@@ -14,9 +14,7 @@ body {
 /* Form Container */
 .form-container {
     max-width: 1000px; /* Increase the width to make it bigger */
-    margin: 100px auto;
-    margin-bottom: 250px; /* Reduce the margin to lessen vertical space */
-    padding-top: 20px; /* Decrease padding to reduce height */
+    margin: 100px auto; /* Center container horizontally with margin */
     padding: 20px;
     border-radius: 10px;
     background-color: #ffffff;
@@ -29,13 +27,13 @@ h2 {
     text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
-    color: #007bff;
+    color: #28a745;
 }
 
 /* Form Group */
 .form-group {
     margin-bottom: 30px;
-    width:50vw;
+    width: 50vw; /* Full width of the form container */
 }
 
 /* Labels */
@@ -50,7 +48,7 @@ label {
 input[type="text"],
 input[type="url"],
 textarea {
-    width: 100%;
+    width: 100%; /* Full width of the form group */
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -62,22 +60,21 @@ textarea {
 input[type="text"]:focus,
 input[type="url"]:focus,
 textarea:focus {
-    border-color: #007bff;
+    border-color: #28a745;
     outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 250, 46, 0.1);
 }
 
 /* Textarea Specific */
 textarea {
-    resize: vertical;
-    min-height: 100px;
+    resize: vertical; 
 }
 
 /* Submit Button */
 .submit-button {
     width: 100%;
     padding: 12px;
-    background-color: #007bff;
+    background-color: #28a745;
     color: white;
     border: none;
     border-radius: 5px;
@@ -88,118 +85,45 @@ textarea {
 
 /* Button Hover State */
 .submit-button:hover {
-    background-color: #0056b3;
+    background-color: #218838;
     transform: translateY(-2px);
 }
 
 /* Responsive Design */
-/* General Reset */
-* {
-    box-sizing: border-box;
-    margin:0 ;
-    padding: 0;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f7f6;
-    color: #333;
-}
-
-/* Form Container */
-.form-container {
-    max-width: 1000px; /* Increase the width to make it bigger */
-    margin: 100px auto;
-    margin-bottom: 100px; /* Reduce the margin to lessen vertical space */
-    padding-top: 20px; /* Decrease padding to reduce height */
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e0e0e0;
-}
-
-/* Title */
-h2 {
-    text-align: center;
-    font-size: 30px;
-    margin-bottom: 20px;
-    color: #007bff;
-}
-
-/* Form Group */
-.form-group {
-    margin-bottom: 30px;
-    width:100%;
-}
-
-/* Labels */
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    font-size: 25px;
-    color: #555;
-}
-
-/* Input and Textarea Styles */
-input[type="text"],
-input[type="url"],
-textarea {
-    width: 31vw;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 25px;
-    transition: border-color 0.3s ease;
-}
-
-/* Focus State */
-input[type="text"]:focus,
-input[type="url"]:focus,
-textarea:focus {
-    border-color: #007bff;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-/* Textarea Specific */
-textarea {
-    resize: vertical;
-    min-height: 100px;
-    max-width: 31vw;
-}
-
-/* Submit Button */
-.submit-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 25px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-/* Button Hover State */
-.submit-button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-    .form-container {
-        padding: 20px;
+@media (max-width: 1200px) {
+    .form-group {
+        width: 100%; /* Full width on medium screens */
     }
-    
-    h2 {
-        font-size: 20px;
+}
+
+@media (max-width: 900px) {
+    input[type="text"],
+    input[type="url"],
+    textarea {
+        font-size: 14px; /* Adjust font size for smaller screens */
     }
 
     .submit-button {
-        font-size: 16px;
+        font-size: 16px; /* Smaller font size for buttons */
+    }
+}
+
+@media (max-width: 600px) {
+    .form-container {
+        padding: 15px; /* Less padding on very small screens */
+    }
+
+    h2 {
+        font-size: 20px; /* Smaller font size for headers */
+    }
+
+    input[type="text"],
+    input[type="url"],
+    textarea {
+        font-size: 14px; /* Ensure text fits on small screens */
+    }
+
+    .submit-button {
+        font-size: 14px; /* Adjust button size */
     }
 }

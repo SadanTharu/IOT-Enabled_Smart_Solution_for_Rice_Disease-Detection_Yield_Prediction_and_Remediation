@@ -1,22 +1,39 @@
-import express from "express"
-import cors from "cors"
-import { connectDB } from "./config/db.js"
+import express from 'express';
+import cors from 'cors';
+import { connectDB } from './config/db.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+// Import routes
+import remediationRouter from './routes/T_remediationRoute.js';
 
-//app configations
-const app = express()
-const port = 4000
+// App configuration
+const app = express();
+const port = 4000;
 
-//middleware
-app.use(express.json())
-app.use(cors())
+// Get current directory name
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-//DB connection
+// Middleware
+app.use(express.json());
+app.use(cors());
+// Serve static files from the 'uploads' directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
+// DB connection
 connectDB();
 
-app.get("/",(req,res)=>{
-    res.send("API working")
-})
+// Test route to ensure server is working
+app.get('/', (req, res) => {
+    res.send('API working');
+});
 
-app.listen(port,()=>{
-    console.log(`Server is running on http://localhost:${port}`)
-})
+// Remediation Management
+app.use('/api/remediation', remediationRouter);
+
+
+// Start server
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
