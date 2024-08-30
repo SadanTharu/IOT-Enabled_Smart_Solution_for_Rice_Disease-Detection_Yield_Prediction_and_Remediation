@@ -15,8 +15,8 @@ app.use(cors())
 connectDB();
 
 // api endpoints
-app.use("/api/diseaseInquiry", diseaseRouter)
-app.use("/images",express.static('uploads'))
+app.use("/api/diseaseInquiry", diseaseRouter);
+app.use("/images",express.static('uploads'));
 
 app.get("/",(req,res)=>{
     res.send("API working")

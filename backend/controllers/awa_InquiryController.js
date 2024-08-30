@@ -2,26 +2,28 @@ import { response } from "express";
 import diseaseInquiryModel from "../models/awa_DiseaseInquiryModels.js";
 import fs from 'fs'
 import { log } from "console";
+import multer from 'multer';
 
 
 // add Disease inquires
 
 const addDiseaseInquiry = async (req,res) => {
-    let image_filename = `${req.file.filename}`;
+    let image_filename = req.file ? req.file.filename : null;
 
     const disease = new diseaseInquiryModel({
+        // farmerName: req.body.farmerName,
         farmerName: req.body.farmerName,
         email: req.body.email,
         phone: req.body.phone,
         inquiryDate: req.body.inquiryDate,
-        inquaryTopic: req.body.inquaryTopic,
+        // inquaryTopic: req.body.inquaryTopic,
+        inquiryTopic: req.body.inquiryTopic,
         symptoms: req.body.symptoms,
         area: req.body.area,
-        description: req.body.description,
         location: req.body.location,
         images: image_filename,
-        priorityLevel: req.body.priorityLevel,
-        status: req.body.status
+        priorityLevel: req.body.priorityLevel
+        
     })
 
     try{
@@ -65,4 +67,4 @@ const removeDiseaseInquiry = async(req,res) =>{
 
 
 
-export {addDiseaseInquiry,listDiseaseInquiry,removeDiseaseInquiry}
+export {addDiseaseInquiry,listDiseaseInquiry,removeDiseaseInquiry};

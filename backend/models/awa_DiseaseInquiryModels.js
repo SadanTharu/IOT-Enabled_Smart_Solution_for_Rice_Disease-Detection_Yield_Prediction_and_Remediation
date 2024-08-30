@@ -5,14 +5,12 @@ const diseasesInquirySchema = new mongoose.Schema({
     email: {type:String,required:true},
     phone: {type:String,required:true},
     inquiryDate: {type:String,required:true},
-    inquaryTopic: {type:String,required:true},
+    inquiryTopic: {type:String,required:true},
     symptoms: {type:String,required:true},
     area: {type:Number,required:true},
-    description: {type:String,required:true},
     location: {type:String,required:true},
     images: {type:String,required:true},
-    priorityLevel: {type:String,required:true},
-    status: {type:String,required:true}
+    priorityLevel: {type:String,required:true}
 
 })
 

@@ -1,0 +1,41 @@
+.inquiry-home-content{
+    margin: 30px auto;
+    position: relative;
+    bottom: 20%;
+    background-color: #52be80;
+    background-size: contain;
+    animation: fadeIn 3s;
+    padding: 100px;
+    
+}
+
+.support-main h2{
+    font-weight: 500;
+    color: black;
+    font-size: max(4.5vw,22px);
+}
+
+.support-main p{
+    color: black;
+    font-weight: 200;
+    font-size: 2.5vw;
+    
+}
+
+.faq-quiz h2{
+    font-weight: 400;
+    color: black;
+    font-size: max(3vw,22px);
+}
+
+.faq-quiz h3{
+    font-weight: 300;
+    color: black;
+    font-size: max(2vw,22px);
+}
+
+.faq-quiz p{
+    font-weight: 150;
+    color: black;
+    font-size: max(1vw,22px);
+}
