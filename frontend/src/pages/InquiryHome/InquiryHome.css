@@ -1,41 +1,60 @@
-.inquiry-home-content{
-    margin: 30px auto;
-    position: relative;
-    bottom: 20%;
-    background-color: #52be80;
-    background-size: contain;
-    animation: fadeIn 3s;
-    padding: 100px;
-    
+.inquiry-home-content {
+    margin: auto;
+    padding: 40px;
+    font-family: 'Georgia', serif;
+    color: #3a3a3a;
 }
 
-.support-main h2{
-    font-weight: 500;
-    color: black;
-    font-size: max(4.5vw,22px);
+.support-main h2 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    text-align: left;
+    margin-bottom: 10px;
 }
 
-.support-main p{
-    color: black;
-    font-weight: 200;
-    font-size: 2.5vw;
-    
+.support-main p {
+    font-size: 1.5rem;
+    color: #5a5a5a;
+    line-height: 1.6;
+    text-align: left;
 }
 
-.faq-quiz h2{
-    font-weight: 400;
-    color: black;
-    font-size: max(3vw,22px);
+.faq-quiz h2 {
+    font-size: 1.5rem;
+    color: #27ae60;
+    margin-top: 30px; /* Reduced margin-top */
+    border-bottom: 1px solid #27ae60;
+    padding-bottom: 1px; /* Reduced padding-bottom */
+    text-align: left; /* Align h2 to the left */
 }
 
-.faq-quiz h3{
-    font-weight: 300;
-    color: black;
-    font-size: max(2vw,22px);
+.faq-quiz h3 {
+    font-size: 1.25rem;
+    color: #2c3e50;
+    margin-top: 1px; /* Reduced margin-top */
+    margin-bottom: 1px; /* Reduced margin-bottom */
+    cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+    transition: color 0.3s ease, transform 0.3s ease; /* Added transition for color and transform */
 }
 
-.faq-quiz p{
-    font-weight: 150;
-    color: black;
-    font-size: max(1vw,22px);
+.faq-quiz h3:hover {
+    color: #1abc9c; /* Change color on hover */
+    transform: scale(1.02); /* Slight zoom effect on hover */
+}
+
+.faq-quiz p {
+    font-size: 1rem;
+    color: #4a4a4a;
+    line-height: 1.7;
+    margin-top: 1px; /* Reduced margin-top */
+    margin-bottom: 1px; /* Reduced margin-bottom */
+    padding-left: 20px;
+    border-left: 4px solid #27ae60;
+    max-height: 0; /* Hide the paragraph initially */
+    overflow: hidden; /* Hide the content that overflows */
+    transition: max-height 2s ease-in-out; /* Slower transition for height change */
+}
+
+.faq-quiz p.show {
+    max-height: 500px; /* Set to a large enough value to show content */
 }

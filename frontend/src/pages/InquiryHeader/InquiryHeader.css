@@ -1,8 +1,9 @@
-.inquiry-header{
-    height: 44vw;
+.inquiry-header {
+    width: 100%; /* Ensure the header spans the full width of the page */
+    height: 500px; /* Set the desired height in pixels */
     margin: 30px auto;
     background: url('/Inquiry_Header.png') no-repeat;
-    background-size: contain;
+    background-size: cover; /* Cover ensures the image covers the whole header */
     position: relative;
 }
 
@@ -13,9 +14,9 @@
     align-items: start;
     gap: 1.5vw;
     max-width: 50%;
-    bottom: 20%;
+    bottom: 10%;
     left: 6vw;
-    animation: fadeIn 3s;
+    animation: fadeIn 2s;
 
 }
 
@@ -23,6 +24,7 @@
     font-weight: 500;
     color: white;
     font-size: max(4.5vw,22px);
+    text-align: left;
 }
 
 .inquiry-heade-contents p{

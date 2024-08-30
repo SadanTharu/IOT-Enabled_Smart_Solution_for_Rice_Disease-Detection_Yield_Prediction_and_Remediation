@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './DiseaseInquiry.css'
+import InquiryHeader from '../InquiryHeader/InquiryHeader';
 
 
 const DiseaseInquiry = () => {
@@ -18,6 +20,7 @@ const DiseaseInquiry = () => {
   });
 
   const [notification, setNotification] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -57,6 +60,9 @@ const DiseaseInquiry = () => {
           priorityLevel: '',
           images: null
         });
+
+        navigate('/viewDiseaseInquiry');
+
       } else {
         setNotification({ message: 'Error adding Disease Inquiry', type: 'error' });
       }
@@ -67,9 +73,10 @@ const DiseaseInquiry = () => {
 
   return (
     <div className="form-container">
+      {/* <InquiryHeader /> */}
       <h2>Add Disease Inquiry</h2>
-      <form onSubmit={handleSubmit}>
-        <table>
+      <form method="POST" onSubmit={handleSubmit}>
+        <table className='table-container'>
           <tbody>
             <tr>
               <td><label htmlFor="farmerName">Farmer Name:</label></td>
