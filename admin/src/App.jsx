@@ -12,6 +12,10 @@ import AddNewRemedies from './pages/Treat/AddNewRemedies'
 
 import User from './pages/User/User'
 import Prediction from './pages/Prediction/Prediction'
+import AddDesease from "./pages/AddDesease/AddDesease";
+import DeseaseList from "./pages/deseaseList/deseaseList";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
 
@@ -19,6 +23,7 @@ const App = () => {
 
   return (
     <div>
+      <ToastContainer />
       <Navbar/>
       <hr/>
       <div className="app-content">
@@ -27,6 +32,8 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard/>}/>
 
           <Route path="/disease" element={<Disease url={url} />}/>
+            <Route path="/adddesease" element={<AddDesease url={url} />} />
+            <Route path="/list" element={<DeseaseList url={url} />} />
 
 
           <Route path="/AddNewRemedies" element={<AddNewRemedies url={url} />} />
