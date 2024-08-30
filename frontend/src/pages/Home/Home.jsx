@@ -1,24 +1,23 @@
-import React, { useState } from 'react';
+import React from "react";
 import "./Home.css";
-import Header from '../../components/Header/Header';
-import FoodDisplay from '../../components/FoodDisplay/foodDisplay';
-import AppDownload from '../../components/AppDownload/AppDownload';
-import ChatBot from '../../components/ChatBot/chatBot';
-import Prediction from '../../components/Prediction/Prediction';
+import Header from "../../components/Header/Header";
+import ExploreDeseases from "../../components/ExploreDeseases/ExploreDeseases";
+import { useState } from "react";
+import AppDownload from "../../components/AppDownload/AppDownload";
+import DiseaseDisplay from "../../components/DeseaseDisplay/DeseaseDisplay";
+import Prediction from "../../components/Prediction/Prediction";
 
 const Home = () => {
-  
-  const [category,setCategory] = useState("All");
-  
+  const [category, setCategory] = useState("All");
   return (
     <div>
-      <Header/>
-      <Prediction/>
-      <FoodDisplay category={category}/>
-      <AppDownload/>
-      <ChatBot/>
+      <Header />
+      <Prediction />
+      <ExploreDeseases category={category} setCategory={setCategory} />
+      <DiseaseDisplay category={category} />
+      <AppDownload />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

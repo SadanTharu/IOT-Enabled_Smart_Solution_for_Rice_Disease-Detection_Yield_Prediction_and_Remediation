@@ -7,26 +7,23 @@
   font-family: Outfit;
   scroll-behavior: smooth;
 }
-
 body{
   min-height: 100vh;
 }
-
 a{
   text-decoration: none;
   color: inherit;
 }
-
 .app{
   width: 80%;
   margin: auto;
 }
-
-@keyframes fadeIn{
+@keyframes fadeIn {
   0%{
     opacity: 0;
   }
   100%{
     opacity: 1;
   }
+  
 }

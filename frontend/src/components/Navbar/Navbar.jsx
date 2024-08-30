@@ -1,44 +1,27 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import "./Navbar.css";
-import { assets } from "../../assets/frontend_assets/assets";
-import {Link, useNavigate} from 'react-router-dom';
-import { useContext } from "react";
-import { StoreContext } from "../../context/StoreContext";
+import { assets } from "../../assets/assets";
+import { Link } from "react-router-dom";
 
-
-const Navbar = ({setShowLogin}) => {
-
-    const [menu,setMenu] = useState("home");
-    const navigate = useNavigate();
-    const {getTotalCartAmount,token,setToken} = useContext(StoreContext);
-    
-    const logout = () => {
-      localStorage.removeItem("token");
-      setToken("");
-      navigate("/")
-    }
-    
+const Navbar = () => {
+  const [menu, setMenu] = useState("home");
 
   return (
     <div className="navbar">
-      <Link to='/'><img src={assets.logo} alt="" className="logo" /></Link>
-
+      <Link to="/">
+        <img src={assets.logo} alt="Logo" className="logo" />
+      </Link>
       <ul className="navbar-menu">
-        <Link to='/' onClick={()=> setMenu("home")} className={menu==="home"?"active":""}>Home</Link>
-        <a href="#Prediction" onClick={()=> setMenu("prediction")} className={menu==="menu"?"active":""}>Yield Prediction</a>
-        <a href="#app-download" onClick={()=> setMenu("disease")} className={menu==="mobile-app"?"active":""}>Disease Detection</a>
-        <a href="#app-download" onClick={()=> setMenu("treatment")} className={menu==="mobile-app"?"active":""}>Treatment Options</a>
-        <a href="#enquiry" onClick={()=> setMenu("enquiry")} className={menu==="enquiry"?"active":""}>Enquiry</a>
-        <a href="#footer" onClick={()=> setMenu("contact-us")} className={menu==="contact-us"?"active":""}>contact us</a>
-        
-       
-      </ul>
+        <Link to="/" onClick={() => setMenu("home")} className={menu === "home" ? "active" : ""} >
+          Home
+        </Link>
+        <a href="#prediction" onClick={()=> setMenu("prediction")} className={menu==="prediction"?"active":""}>Prediction</a>
+        <a href="#diseases" onClick={()=> setMenu("diseases")} className={menu==="diseases"?"active":""}>Diseases</a>
+        <a href="#remedies" onClick={()=> setMenu("remedies")} className={menu==="remedies"?"active":""}>Remedies</a>
+        <a href="#contact-us" onClick={()=> setMenu("contact-us")} className={menu==="contact-us"?"active":""}>Contact Us</a>
 
-      <div className="navbar-right">
-        <div className="navbar-profile">
-          <img src={assets.profile_icon} alt="" />
-        </div>
-      </div>
+      </ul>
+      <button>Sign In</button>
     </div>
   );
 };

@@ -1,21 +1,21 @@
-import React from 'react'
-import { useState } from "react";
-import './Header.css'
-
+import React from "react";
+import "./Header.css";
 
 const Header = () => {
-
-  const [menu,setMenu] = useState("home");
-
   return (
-    <div className='header'>
+    <div className="header">
       <div className="header-contents">
-        <h2>Predict crop yields and disease.</h2>
-        <p>Join us on a journey to optimize your agricultural success and experience the benefits that our crop yield prediction and disease treatment tools can offer. Use our platform today to enhance your crop yields and ensure the health of your crops. Elevate your farming practices with our cutting-edge solutions!</p>
-        <a href="#explore-menu" onClick={()=> setMenu("menu")} className={menu==="menu"?"active":""}><button>View Menu</button></a>
+        <h2>These Are Common Diseases Divcovered By Our Experties</h2>
+        <p>
+          Rice diseases are significant challenges in agriculture, affecting
+          rice yield and quality worldwide. They are caused by various
+          pathogens, including fungi, bacteria, viruses, and nematodes, leading
+          to symptoms like leaf spots, blights, and stunted growth.
+        </p>
+        <button>View Deseases</button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

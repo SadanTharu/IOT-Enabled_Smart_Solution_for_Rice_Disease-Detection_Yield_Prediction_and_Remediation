@@ -1,62 +1,51 @@
-.Prediction{
+.prediction{
     display: flex;
     flex-direction: column;
     gap: 20px;
+    margin-bottom: 40px;;
 }
 
-.Prediction h1{
-    color: #262626;
+.prediction h1{
     font-weight: 500;
+    color: #262626;
 }
 
-.Prediction-text{
-    max-width: 60%;
-    color: #808080;
+#underconstruction{
+   color: red;
+   font-size: 20px;
 }
 
-.Prediction-list{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 30px;
-    text-align: center;
-    margin: 20px 0px;
-    overflow-x: scroll;
-}
-
-.Prediction-list::-webkit-scrollbar{
-    display: none;
-}
-
-.Prediction-list-item img{
-    width: 7.5vw;
-    min-width: 80px;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: 0.2s;
-}
-
-.Prediction-list-item p{
-    margin-top: 10px;
-    color: #747474;
-    font-size: max(1.4vw,16px);
-    cursor: pointer;
-}
-.Prediction hr{
+.prediction hr{
     margin: 10px 0px;
     height: 2px;
     background-color: #e2e2e2;
     border: none;
 }
 
-.Prediction-list-item .active{
-    border: 4px solid tomato;
-    padding: 2px;
-}
+ .add-location, .add-size, .add-disease, .add-date, .add-type {
 
-@media(max-width: 1050px){
-    .Prediction-text{
-        max-width: 100%;
-        font-size: 14px;
-    }
-}
+    
+    margin-bottom: 20px;
+
+ }
+
+ .add-location input , .add-size input, .add-disease input, .add-date input, .add-type select , .add-type input{
+    padding: 10px;
+    max-width: 200px;
+ }
+
+ .add-btn{
+    max-width: 120px;
+    border: none;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+
+ }
+
+ .formside {
+   display: flex;
+  justify-content: space-between; /* Adjusts the space between the elements */
+
+ }

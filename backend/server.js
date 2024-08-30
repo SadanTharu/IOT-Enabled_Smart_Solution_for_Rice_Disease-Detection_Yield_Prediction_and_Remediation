@@ -1,6 +1,8 @@
 import express from "express"
 import cors from "cors"
 import { connectDB } from "./config/db.js"
+import diseaseRouter from './routes/diseaseRouter.js';
+import predictionRouter from './routes/predictionRouter.js';
 
 //app configations
 const app = express()
@@ -12,6 +14,14 @@ app.use(cors())
 
 //DB connection
 connectDB();
+
+//api endpoints
+//matheesha
+app.use("/api/disease",diseaseRouter)
+app.use("/images",express.static('uploads'))
+
+//sadan
+app.use("/api/prediction",predictionRouter)
 
 app.get("/",(req,res)=>{
     res.send("API working")
