@@ -17,7 +17,7 @@ const Navbar = () => {
         </Link>
         <a href="#prediction" onClick={()=> setMenu("prediction")} className={menu==="prediction"?"active":""}>Prediction</a>
         <a href="#diseases" onClick={()=> setMenu("diseases")} className={menu==="diseases"?"active":""}>Diseases</a>
-        <a href="#remedies" onClick={()=> setMenu("remedies")} className={menu==="remedies"?"active":""}>Remedies</a>
+        <Link to="/Remedies" onClick={() => setMenu("remedies")} className={menu === "remedies" ? "active" : ""} >Remedies</Link>
         <a href="#contact-us" onClick={()=> setMenu("contact-us")} className={menu==="contact-us"?"active":""}>Contact Us</a>
 
       </ul>
