@@ -12,6 +12,8 @@ import TreatmentDashboard from './pages/Treat/TreatmentDashboard'
 import AddNewRemedies from './pages/Treat/AddNewRemedies'
 import RemedyList from './pages/Treat/RemedyList'
 import RemedyDetail from './pages/Treat/RemedyDetail'
+import EditRemedy from './pages/Treat/EditRemedy'
+
 
 import User from './pages/User/User'
 import Prediction from './pages/Prediction/Prediction'
@@ -34,7 +36,8 @@ const App = () => {
           <Route path="/Treatmentdashboard" element={<TreatmentDashboard url={url} />} />
           <Route path="/AddNewRemedies" element={<AddNewRemedies url={url} />} />
           <Route path="/RemedyList" element={<RemedyList url={url} />} />
-          <Route path="/remedies/:id" element={<RemedyDetail url={url} />} />
+          <Route path="/remedy/:id" element={<RemedyDetail url={url} />} />
+          <Route path="/edit-remedy/:id" element={<EditRemedy url={url} />} />
     
 
           <Route path="/user" element={<User/>}/>

@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import './RemedyDetail.css'; 
+import { useParams, useNavigate } from 'react-router-dom';
+import { Box, Typography, Card, CardContent, CardMedia, Button, CircularProgress, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'; 
+import { toast } from 'react-toastify';
+import './RemedyDetail.css';
 
 const RemedyDetail = ({ url }) => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [remedy, setRemedy] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [openDialog, setOpenDialog] = useState(false);
 
     useEffect(() => {
         const fetchRemedy = async () => {
@@ -14,23 +23,166 @@ const RemedyDetail = ({ url }) => {
                 setRemedy(response.data);
             } catch (error) {
                 console.error('Error fetching remedy details:', error);
+                setError(`Error: ${error.response?.data?.error || error.message}`);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchRemedy();
     }, [id, url]);
 
-    if (!remedy) return <p>Loading...</p>;
+    const handleEditClick = () => {
+        navigate(`/edit-remedy/${id}`);
+    };
+
+    const handleDeleteClick = () => {
+        setOpenDialog(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        try {
+            await axios.delete(`${url}/api/remediation/${id}`);
+            setOpenDialog(false);
+            navigate('/RemedyList');
+        } catch (error) {
+            console.error('Error deleting remedy:', error);
+            toast.error(`Error deleting remedy: ${error.response?.data?.error || error.message}`);
+        }
+    };
+
+    const handleCancelDelete = () => {
+        setOpenDialog(false);
+    };
+
+    if (loading) return (
+        <Box className="loading-container">
+            <CircularProgress size={60} className="loading-spinner" />
+        </Box>
+    );
+
+    if (error) return (
+        <Box className="error-container">
+            <Typography variant="h6" color="error">{error}</Typography>
+        </Box>
+    );
 
     return (
-        <div className="remedy-detail">
-            <h2>{remedy.diseaseName}</h2>
-            <p><strong>Symptoms:</strong> {remedy.symptoms}</p>
-            <p><strong>Steps:</strong> {remedy.steps}</p>
-            <p><strong>Materials:</strong> {remedy.materials}</p>
-            <p><strong>YouTube Tutorial:</strong> <a href={remedy.youtubeTutorial} target="_blank" rel="noopener noreferrer">Watch here</a></p>
-            <p><strong>Notes:</strong> {remedy.notes}</p>
-        </div>
+        <Card className="remedy-detail-card">
+            {remedy?.image && (
+                <CardMedia
+                    component="img"
+                    height="300"
+                    image={remedy.image}
+                    alt={remedy.diseaseName}
+                    className="remedy-detail-image"
+                />
+            )}
+            <CardContent>
+            <CardContent>
+    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+        <Typography variant="h4" component="div" className="remedy-detail-title" sx={{ fontWeight: 'bold' }}>
+            {remedy?.diseaseName}
+        </Typography>
+        <Box>
+            <Box position="absolute" top={90} right={60}>
+                <IconButton aria-label="back" color="default" onClick={() => navigate(-1)}>
+                    <ArrowBackIcon />
+                </IconButton>
+            </Box>
+            <IconButton aria-label="edit" color="primary" onClick={handleEditClick}>
+                <EditIcon />
+            </IconButton>
+            <IconButton aria-label="delete" color="error" onClick={handleDeleteClick}>
+                <DeleteIcon />
+            </IconButton>
+        </Box>
+    </Box>
+    {/* Rest of the content */}
+</CardContent>
+
+
+                <Typography variant="h6" component="div" className="remedy-detail-subtitle" sx={{ fontWeight: 'bold' }}>
+                    Symptoms
+                </Typography>
+                <hr /><br />
+                <Typography variant="body1" className="remedy-detail-text">
+                    {remedy?.symptoms.split('\n').map((line, index) => (
+                        <div key={index} style={{ marginBottom: '8px' }}>{line.trim()}</div>
+                    ))}
+                </Typography>
+                <br />
+
+                <Typography variant="h6" component="div" className="remedy-detail-subtitle" sx={{ fontWeight: 'bold' }}>
+                    Steps
+                </Typography>
+                <hr /><br />
+                <Typography variant="body1" className="remedy-detail-text">
+                    {remedy?.steps.split('\n').map((line, index) => (
+                        <div key={index} style={{ marginBottom: '8px' }}>{line.trim()}</div>
+                    ))}
+                </Typography>
+                <br />
+
+                <Typography variant="h6" component="div" className="remedy-detail-subtitle" sx={{ fontWeight: 'bold' }}>
+                    Materials
+                </Typography>
+                <hr /><br />
+                <Typography variant="body1" className="remedy-detail-text">
+                    {remedy?.materials.split('\n').map((line, index) => (
+                        <div key={index} style={{ marginBottom: '8px' }}>{line.trim()}</div>
+                    ))}
+                </Typography>
+                <br />
+
+                <Typography variant="h6" component="div" className="remedy-detail-subtitle" sx={{ fontWeight: 'bold' }}>
+                    YouTube Tutorial
+                </Typography>
+                <hr /><br /><br />
+                <Button
+                    variant="contained"
+                    style={{ backgroundColor: '#28a745', color: '#ffffff' }}
+                    href={remedy?.youtubeTutorial}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="remedy-detail-button"
+                >
+                    Watch Tutorial
+                </Button>
+                <br /><br /><br />
+
+                <Typography variant="h6" component="div" className="remedy-detail-subtitle" sx={{ fontWeight: 'bold' }}>
+                    Notes
+                </Typography>
+                <hr /><br />
+                <Typography variant="body1" className="remedy-detail-text">
+                    {remedy?.notes.split('\n').map((line, index) => (
+                        <div key={index} style={{ marginBottom: '8px' }}>{line.trim()}</div>
+                    ))}
+                </Typography>
+            </CardContent>
+
+            <Dialog
+                open={openDialog}
+                onClose={handleCancelDelete}
+                aria-labelledby="delete-confirmation-dialog"
+            >
+                <DialogTitle id="delete-confirmation-dialog">Confirm Delete</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you sure you want to delete this remedy? This action cannot be undone.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCancelDelete} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleConfirmDelete} color="error" autoFocus>
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </Card>
     );
 };
 

@@ -7,6 +7,8 @@ import disease_icon from './disease_icon.png'
 import treat_icon from './treat_icon.png'
 import user_icon from './user_icon.png'
 import prediction_icon from './prediction_icon.png'
+import menu_icon from './menu_icon.png'
+
 
 export const assets ={
     logo,
@@ -18,7 +20,9 @@ export const assets ={
     disease_icon,
     treat_icon,
     user_icon,
-    prediction_icon
+    prediction_icon,
+    menu_icon
+   
 }
 
 export const url = 'http://localhost:4000'

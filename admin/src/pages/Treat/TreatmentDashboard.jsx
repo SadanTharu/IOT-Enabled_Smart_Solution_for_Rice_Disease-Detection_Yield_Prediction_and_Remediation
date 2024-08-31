@@ -14,6 +14,9 @@ const TreatmentDashboard = () => {
             <Link to="/AddNewRemedies" className="dashboard-link">
               Add New Remedy
             </Link>
+            <Link to="/RemedyList" className="dashboard-link">
+              Remedy Collection
+            </Link>
             {/* Add more links or buttons here if needed */}
           </div>
         </div>

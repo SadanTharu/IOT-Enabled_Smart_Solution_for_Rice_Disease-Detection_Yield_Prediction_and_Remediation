@@ -1,25 +1,24 @@
-/* General Reset */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
 
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f7f6;
-    color: #333;
-}
+/* Existing CSS */
 
 /* Form Container */
 .form-container {
-    max-width: 1000px; /* Increase the width to make it bigger */
-    margin: 100px auto; /* Center container horizontally with margin */
+    max-width: 1000px; 
+    margin: 100px auto; 
     padding: 20px;
     border-radius: 10px;
     background-color: #ffffff;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     border: 1px solid #e0e0e0;
+}
+.error-text {
+    color: red;
+    font-size: 14px;
+    background-color: #fdd;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid red;
+    margin-top: 5px;
 }
 
 /* Title */
@@ -33,7 +32,7 @@ h2 {
 /* Form Group */
 .form-group {
     margin-bottom: 30px;
-    width: 50vw; /* Full width of the form container */
+    width: 50vw; 
 }
 
 /* Labels */
@@ -48,7 +47,7 @@ label {
 input[type="text"],
 input[type="url"],
 textarea {
-    width: 100%; /* Full width of the form group */
+    width: 100%; 
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -70,12 +69,17 @@ textarea {
     resize: vertical; 
 }
 
+/* Button Group */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Submit Button */
-.submit-button {
-    width: 100%;
+.submit-button,
+.cancel-button {
+    width: 48%; 
     padding: 12px;
-    background-color: #28a745;
-    color: white;
     border: none;
     border-radius: 5px;
     font-size: 18px;
@@ -83,16 +87,44 @@ textarea {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* Button Hover State */
+/* Submit Button Specific */
+.submit-button {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Submit Button Hover State */
 .submit-button:hover {
     background-color: #218838;
+    transform: translateY(-2px);
+}
+
+/* Cancel Button Specific */
+.cancel-button {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Cancel Button Hover State */
+.cancel-button:hover {
+    background-color: #5a6268;
     transform: translateY(-2px);
 }
 
 /* Responsive Design */
 @media (max-width: 1200px) {
     .form-group {
-        width: 100%; /* Full width on medium screens */
+        width: 100%;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .submit-button,
+    .cancel-button {
+        width: 100%; 
+        margin-bottom: 10px;
     }
 }
 
@@ -100,30 +132,33 @@ textarea {
     input[type="text"],
     input[type="url"],
     textarea {
-        font-size: 14px; /* Adjust font size for smaller screens */
+        font-size: 14px; 
     }
 
-    .submit-button {
-        font-size: 16px; /* Smaller font size for buttons */
+    .submit-button,
+    .cancel-button {
+        font-size: 16px; 
     }
 }
 
 @media (max-width: 600px) {
     .form-container {
-        padding: 15px; /* Less padding on very small screens */
+        padding: 15px; 
     }
 
     h2 {
-        font-size: 20px; /* Smaller font size for headers */
+        font-size: 20px; 
     }
 
     input[type="text"],
     input[type="url"],
     textarea {
-        font-size: 14px; /* Ensure text fits on small screens */
+        font-size: 14px;
     }
 
-    .submit-button {
-        font-size: 14px; /* Adjust button size */
+    .submit-button,
+    .cancel-button {
+        font-size: 14px; 
     }
 }
+

@@ -1,65 +1,105 @@
-.remedy-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-    justify-content: center;
-    width: 80%; 
-    box-sizing: border-box;
-    padding: 10px;
-    margin: 20px;
+.remedy-list-container {
+    padding: 20px;
+    margin-left: 100px;
+    margin-top: 100px;
 }
 
-.remedy-card {
-    width: 250px;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+.search-bar-container {
+    margin-right: 530px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.header-container .MuiTypography-root {
+    color: #28a745; 
+    font-weight: bold; 
+    text-align: center;
+    flex: 1; 
+}
+
+.add-remedy-button {
+    color: #28a745; 
+}
+
+.remedy-list {
+    margin-left: 150px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
-    transition: transform 0.3s ease-in-out;
+    gap: 20px;
 }
 
-.remedy-card:hover {
-    transform: translateY(-5px);
+.remedy-list-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #f9f9f9;
 }
 
-.remedy-card-image {
-    height: 200px;
+.remedy-list-item:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.remedy-list-image-container {
+    flex-shrink: 0;
+    margin-right: 20px;
+}
+
+.remedy-list-image {
+    width: 80px;
+    height: 80px;
     object-fit: cover;
+    border-radius: 8px;
 }
 
-.remedy-card-no-image {
-    height: 200px;
+.remedy-list-no-image {
+    width: 80px;
+    height: 80px;
+    background-color: #ccc;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f0f0f0;
-    color: #888;
-    font-style: italic;
+    border-radius: 8px;
+    margin-right: 20px;
 }
 
-.remedy-card-content {
-    flex: 1 1 auto;
-    padding: 16px;
+.remedy-list-info {
+    flex-grow: 1;
 }
 
-.remedy-card-title {
+.remedy-list-title {
+    margin-bottom: 8px;
     font-weight: bold;
     color: #333;
 }
 
-.remedy-card-text {
-    color: #777;
+.remedy-list-text {
+    color: #555;
 }
 
-.remedy-card-actions {
-    padding: 16px;
-    justify-content: flex-end;
+.remedy-list-action {
+    margin-left: auto;
 }
 
-.remedy-card-button {
+.remedy-list-button {
     text-transform: none;
-    font-weight: bold;
-    color: #28a745;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    padding: 6px 12px;
+    transition: background-color 0.3s ease;
+}
+
+.remedy-list-button:hover {
+    color: #0056b3;
 }

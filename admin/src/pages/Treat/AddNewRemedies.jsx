@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import './AddNewRemedies.css';
 
@@ -13,7 +14,9 @@ const AddNewRemedies = () => {
         youtubeTutorial: '',
         notes: '',
     });
-    const [image, setImage] = useState(null); // State for the selected image
+    const [image, setImage] = useState(null);
+    const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,32 +24,75 @@ const AddNewRemedies = () => {
     };
 
     const handleImageChange = (e) => {
-        setImage(e.target.files[0]); // Update state with the selected image file
+        const file = e.target.files[0];
+        if (file) {
+            if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.type)) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    image: 'Invalid file type. Only JPEG, PNG, and GIF are allowed.',
+                }));
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    image: 'File size exceeds 5MB limit.',
+                }));
+                return;
+            }
+            setImage(file);
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                image: '',
+            }));
+        }
+    };
+
+    const validate = () => {
+        const newErrors = {};
+        if (!remediation.diseaseName) newErrors.diseaseName = 'Disease name is required.';
+        if (!remediation.symptoms) newErrors.symptoms = 'Symptoms are required.';
+        if (!remediation.steps) newErrors.steps = 'Remediation steps are required.';
+        if (!remediation.materials) newErrors.materials = 'Materials needed are required.';
+        if (remediation.youtubeTutorial && !/^https?:\/\/.+/.test(remediation.youtubeTutorial)) {
+            newErrors.youtubeTutorial = 'Invalid URL format. Please enter a valid URL.';
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData(); // Use FormData to handle file uploads
+
+        if (!validate()) return;
+
+        const formData = new FormData();
         formData.append('diseaseName', remediation.diseaseName);
         formData.append('symptoms', remediation.symptoms);
         formData.append('steps', remediation.steps);
         formData.append('materials', remediation.materials);
-        formData.append('youtubeTutorial', remediation.youtubeTutorial);
-        formData.append('notes', remediation.notes);
+        formData.append('youtubeTutorial', remediation.youtubeTutorial || ''); 
+        formData.append('notes', remediation.notes || '');
         if (image) {
-            formData.append('image', image); // Append image file
+            formData.append('image', image);
         }
 
         try {
-            console.log('Submitting data:', remediation); // Log the data being sent
+            console.log('Submitting data:', remediation);
             const response = await axios.post('http://localhost:4000/api/remediation', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data', // Set the content type for file upload
+                    'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log('Response:', response.data); // Log the response
-            toast.success('Remediation added successfully!');
-            // Clear the form after successful submission
+            console.log('Response:', response.data);
+
+            toast.success('Remediation added successfully!', {
+                autoClose: 1000,
+                onClose: () => {
+                    navigate('/RemedyList');
+                }
+            });
+
             setRemediation({
                 diseaseName: '',
                 symptoms: '',
@@ -55,11 +101,16 @@ const AddNewRemedies = () => {
                 youtubeTutorial: '',
                 notes: '',
             });
-            setImage(null); // Clear the image state
+            setImage(null);
+            setErrors({});
         } catch (error) {
-            console.error('Error response:', error.response); // Log the full error response
+            console.error('Error response:', error.response);
             toast.error('Error adding remediation: ' + (error.response ? error.response.data.error : error.message));
         }
+    };
+
+    const handleCancel = () => {
+        navigate('/RemedyList');
     };
 
     return (
@@ -73,8 +124,8 @@ const AddNewRemedies = () => {
                         name="diseaseName"
                         value={remediation.diseaseName}
                         onChange={handleChange}
-                        required
                     />
+                    {errors.diseaseName && <p className="error-text">{errors.diseaseName}</p>}
                 </div>
                 <div className="form-group">
                     <label>Symptoms:</label>
@@ -82,8 +133,8 @@ const AddNewRemedies = () => {
                         name="symptoms"
                         value={remediation.symptoms}
                         onChange={handleChange}
-                        required
                     />
+                    {errors.symptoms && <p className="error-text">{errors.symptoms}</p>}
                 </div>
                 <div className="form-group">
                     <label>Remediation Steps:</label>
@@ -91,8 +142,8 @@ const AddNewRemedies = () => {
                         name="steps"
                         value={remediation.steps}
                         onChange={handleChange}
-                        required
                     />
+                    {errors.steps && <p className="error-text">{errors.steps}</p>}
                 </div>
                 <div className="form-group">
                     <label>Materials Needed:</label>
@@ -100,17 +151,18 @@ const AddNewRemedies = () => {
                         name="materials"
                         value={remediation.materials}
                         onChange={handleChange}
-                        required
                     />
+                    {errors.materials && <p className="error-text">{errors.materials}</p>}
                 </div>
                 <div className="form-group">
                     <label>YouTube Tutorial (URL):</label>
                     <input
-                        type="url"
+                        type="text"  
                         name="youtubeTutorial"
                         value={remediation.youtubeTutorial}
                         onChange={handleChange}
                     />
+                    {errors.youtubeTutorial && <p className="error-text">{errors.youtubeTutorial}</p>}
                 </div>
                 <div className="form-group">
                     <label>Notes/Warnings:</label>
@@ -127,8 +179,12 @@ const AddNewRemedies = () => {
                         accept="image/*"
                         onChange={handleImageChange}
                     />
+                    {errors.image && <p className="error-text">{errors.image}</p>}
                 </div>
-                <button type="submit" className="submit-button">Add Remediation</button>
+                <div className="button-group">
+                    <button type="submit" className="submit-button">Add Remediation</button>
+                    <button type="button" className="cancel-button" onClick={handleCancel}>Cancel</button>
+                </div>
             </form>
             <ToastContainer />
         </div>

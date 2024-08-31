@@ -1,83 +1,144 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, CardActions, CardContent, CardMedia, Button, Typography, Box } from '@mui/material';
+import { Box, Typography, TextField, CircularProgress, Button, IconButton } from '@mui/material';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import './RemedyList.css';
 
-const RemedyList = () => {
+const RemedyList = ({ url }) => {
     const [remedies, setRemedies] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
-    const fetchRemedy = async () => {
+    const fetchRemedies = async () => {
         try {
-            const response = await axios.get('http://localhost:4000/api/remediation');
-            console.log('Fetched remedies:', response.data);
+            const response = await axios.get(`${url}/api/remediation`);
             setRemedies(response.data);
+            localStorage.setItem('remedies', JSON.stringify(response.data));
         } catch (error) {
             console.error('Error fetching remedies:', error);
             toast.error('Error fetching remedies: ' + error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchRemedy();
+        fetchRemedies();
     }, []);
 
-    const handleCardClick = (id) => {
-        console.log('Card clicked with id:', id);
+    const handleRemedyClick = (id) => {
+        navigate(`/remedy/${id}`);
     };
 
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value.toLowerCase());
+    };
+
+    const handleDeleteRemedy = async (id) => {
+        try {
+            await axios.delete(`${url}/api/remediation/${id}`);
+            toast.success('Remedy deleted successfully!');
+            fetchRemedies();
+        } catch (error) {
+            console.error('Error deleting remedy:', error);
+            toast.error('Error deleting remedy: ' + error.message);
+        }
+    };
+
+    const handleAddRemedy = () => {
+        navigate('/AddNewRemedies'); 
+    };
+
+    const filteredRemedies = remedies.filter(remedy =>
+        remedy.diseaseName.toLowerCase().includes(searchTerm)
+    );
+
     return (
+        <Box className="remedy-list-container">
+    <Box className="header-container">
+        <Typography variant="h4">Remedy Collection</Typography>
+        <IconButton
+            color="green"
+            aria-label="add remedy"
+            onClick={handleAddRemedy}
+            className="add-remedy-button"
+        >
+            <AddCircleIcon fontSize="large" />
+        </IconButton>
+    </Box>
+    <Box className="search-bar-container">
+        <TextField
+            label="Search by Disease Name"
+            variant="outlined"
+            margin="normal"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className="search-bar"
+        />
+    </Box>
+    {loading ? (
+        <Box className="loading-container">
+            <CircularProgress className="loading-spinner" />
+        </Box>
+    ) : (
         <Box className="remedy-list">
-            {remedies.length ? (
-                remedies.map(remedy => (
-                    <Card
+            {filteredRemedies.length ? (
+                filteredRemedies.map(remedy => (
+                    <Box
                         key={remedy._id}
-                        className="remedy-card"
-                        onClick={() => handleCardClick(remedy._id)}
+                        className="remedy-list-item"
+                        onClick={() => handleRemedyClick(remedy._id)}
                     >
-                        {remedy.image ? (
-                            <CardMedia
-                                component="img"
-                                className="remedy-card-image"
-                                image={remedy.image || '/path/to/default-image.jpg'}
-                                alt={remedy.diseaseName}
-                            />
-                        ) : (
-                            <Box className="remedy-card-no-image">
-                                No image available
-                            </Box>
-                        )}
-                        <CardContent className="remedy-card-content">
+                        <Box className="remedy-list-image-container">
+                            {remedy.image ? (
+                                <img
+                                    src={remedy.image}
+                                    alt={remedy.diseaseName}
+                                    className="remedy-list-image"
+                                />
+                            ) : (
+                                <Box className="remedy-list-no-image">
+                                    No image available
+                                </Box>
+                            )}
+                        </Box>
+                        <Box className="remedy-list-info">
                             <Typography
-                                gutterBottom
                                 variant="h6"
-                                component="div"
-                                className="remedy-card-title"
+                                className="remedy-list-title"
                             >
                                 {remedy.diseaseName}
                             </Typography>
                             <Typography
                                 variant="body2"
-                                className="remedy-card-text"
+                                className="remedy-list-text"
                             >
                                 {remedy.symptoms.slice(0, 100)}...
                             </Typography>
-                        </CardContent>
-                        <CardActions className="remedy-card-actions">
+                        </Box>
+                        <Box className="remedy-list-action">
                             <Button
                                 size="small"
-                                className="remedy-card-button"
-                                onClick={() => handleCardClick(remedy._id)}
+                                className="remedy-list-button"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleRemedyClick(remedy._id);
+                                }}
                             >
                                 Learn More
                             </Button>
-                        </CardActions>
-                    </Card>
+                        </Box>
+                    </Box>
                 ))
             ) : (
-                <p>No remedies found.</p>
+                <Typography>No remedies found.</Typography>
             )}
         </Box>
+    )}
+</Box>
     );
 };
 

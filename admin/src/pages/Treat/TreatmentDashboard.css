@@ -1,7 +1,6 @@
 .dashboard-container {
     display: flex;
-    margin: 100px auto;
-    margin-top: -300px;
+    margin-left: 420px;
     flex-direction: column;
     min-height: 100vh;
   }
@@ -42,7 +41,7 @@
   
   .dashboard-link {
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #126216;
     color: #fff;
     border-radius: 5px;
     text-decoration: none;
