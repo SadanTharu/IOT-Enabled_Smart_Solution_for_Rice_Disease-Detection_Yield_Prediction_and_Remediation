@@ -8,6 +8,8 @@
     width: 100%;
     background-color: #e0f2f1; /* Light green background */
     box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+    margin-top: -90px; /* Negative margin to move up */
+
   }
   /* Heading styling */
   .diseasetopiccontainner-main h1 {
