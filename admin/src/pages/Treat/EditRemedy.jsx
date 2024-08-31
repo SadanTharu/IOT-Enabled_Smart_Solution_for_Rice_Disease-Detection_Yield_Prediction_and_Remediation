@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import './AddNewRemedies.css';
+import './EditRemedy.css';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { IconButton, Box } from '@mui/material';
 
-const AddNewRemedies = () => {
+const EditRemedy = ({ url }) => {
+    const { id } = useParams();
+    const navigate = useNavigate();
     const [remediation, setRemediation] = useState({
         diseaseName: '',
         symptoms: '',
@@ -16,7 +20,24 @@ const AddNewRemedies = () => {
     });
     const [image, setImage] = useState(null);
     const [errors, setErrors] = useState({});
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchRemedy = async () => {
+            try {
+                const response = await axios.get(`${url}/api/remediation/${id}`);
+                setRemediation(response.data);
+            } catch (error) {
+                console.error('Error fetching remedy details:', error);
+                setError(`Error: ${error.response?.data?.error || error.message}`);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchRemedy();
+    }, [id, url]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,28 +45,7 @@ const AddNewRemedies = () => {
     };
 
     const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.type)) {
-                setErrors((prevErrors) => ({
-                    ...prevErrors,
-                    image: 'Invalid file type. Only JPEG, PNG, and GIF are allowed.',
-                }));
-                return;
-            }
-            if (file.size > 5 * 1024 * 1024) {
-                setErrors((prevErrors) => ({
-                    ...prevErrors,
-                    image: 'File size exceeds 5MB limit.',
-                }));
-                return;
-            }
-            setImage(file);
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                image: '',
-            }));
-        }
+        setImage(e.target.files[0]);
     };
 
     const validate = () => {
@@ -55,7 +55,7 @@ const AddNewRemedies = () => {
         if (!remediation.steps) newErrors.steps = 'Remediation steps are required.';
         if (!remediation.materials) newErrors.materials = 'Materials needed are required.';
         if (remediation.youtubeTutorial && !/^https?:\/\/.+/.test(remediation.youtubeTutorial)) {
-            newErrors.youtubeTutorial = 'Invalid URL format. Please enter a valid URL.';
+            newErrors.youtubeTutorial = 'Invalid URL format.';
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -71,51 +71,54 @@ const AddNewRemedies = () => {
         formData.append('symptoms', remediation.symptoms);
         formData.append('steps', remediation.steps);
         formData.append('materials', remediation.materials);
-        formData.append('youtubeTutorial', remediation.youtubeTutorial || ''); 
+        formData.append('youtubeTutorial', remediation.youtubeTutorial || '');
         formData.append('notes', remediation.notes || '');
         if (image) {
             formData.append('image', image);
         }
-
+    
+        console.log('Updating remediation with ID:', id);
+        console.log('FormData:', formData);
+    
         try {
-            console.log('Submitting data:', remediation);
-            const response = await axios.post('http://localhost:4000/api/remediation', formData, {
+            const response = await axios.put(`${url}/api/remediation/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log('Response:', response.data);
-
-            toast.success('Remediation added successfully!', {
+            localStorage.removeItem('remedies');
+            toast.success('Remediation updated successfully!', {
                 autoClose: 1000,
                 onClose: () => {
-                    navigate('/RemedyList');
+                    navigate(-1);
                 }
             });
-
-            setRemediation({
-                diseaseName: '',
-                symptoms: '',
-                steps: '',
-                materials: '',
-                youtubeTutorial: '',
-                notes: '',
-            });
-            setImage(null);
-            setErrors({});
         } catch (error) {
-            console.error('Error response:', error.response);
-            toast.error('Error adding remediation: ' + (error.response ? error.response.data.error : error.message));
+            console.error('Error updating remediation:', error);
+            if (error.response && error.response.data) {
+                toast.error('Error updating remediation: ' + error.response.data.error);
+            } else {
+                toast.error('Error updating remediation: ' + error.message);
+            }
         }
     };
 
     const handleCancel = () => {
-        navigate('/RemedyList');
+        navigate(-1);
     };
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <div className="form-container">
-            <h2>Add New Remediation</h2>
+            <Box position="absolute" top={90} right={60}>
+                <IconButton aria-label="back" color="default" onClick={() => navigate(-1)}>
+                    <ArrowBackIcon />
+                </IconButton>
+            </Box>
+
+            <h2>Edit Remediation</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Disease Name:</label>
@@ -157,7 +160,7 @@ const AddNewRemedies = () => {
                 <div className="form-group">
                     <label>YouTube Tutorial (URL):</label>
                     <input
-                        type="text"  // Change to text
+                        type="text"  // Changed to text
                         name="youtubeTutorial"
                         value={remediation.youtubeTutorial}
                         onChange={handleChange}
@@ -173,16 +176,15 @@ const AddNewRemedies = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label>Upload Image:</label>
+                    <label>Upload New Image (optional):</label>
                     <input
                         type="file"
                         accept="image/*"
                         onChange={handleImageChange}
                     />
-                    {errors.image && <p className="error-text">{errors.image}</p>}
                 </div>
                 <div className="button-group">
-                    <button type="submit" className="submit-button">Add Remediation</button>
+                    <button type="submit" className="submit-button">Update Remediation</button>
                     <button type="button" className="cancel-button" onClick={handleCancel}>Cancel</button>
                 </div>
             </form>
@@ -191,4 +193,4 @@ const AddNewRemedies = () => {
     );
 };
 
-export default AddNewRemedies;
+export default EditRemedy;
