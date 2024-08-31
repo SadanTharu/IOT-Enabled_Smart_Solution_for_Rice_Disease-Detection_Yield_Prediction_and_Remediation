@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { Link } from "react-router-dom";
 import "./Disease.css";
 
@@ -13,11 +13,9 @@ const Disease = () => {
           <Link to="/adddesease" className="disease-action-main">
             <p>Add Disease</p>
           </Link>
-          <div className="disease-action-main">
-            <Link to="/list" className="disease-action-main">
-              <p>View Diseases</p>
-            </Link>
-          </div>
+          <Link to="/list" className="disease-action-main">
+            <p>View Diseases</p>
+          </Link>
           <div className="disease-action-main">
             <p>Update Disease</p>
           </div>
@@ -27,7 +25,7 @@ const Disease = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Disease
+export default Disease;
