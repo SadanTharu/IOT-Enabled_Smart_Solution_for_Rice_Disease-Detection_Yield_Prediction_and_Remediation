@@ -8,7 +8,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import Disease from './pages/Disease/Disease'
 
 
-import AddNewRemedies from './pages/Treat/AddNewRemedies'
+import Remedies from './pages/Treat/TreatmentDashboard'
 
 import User from './pages/User/User'
 import Prediction from './pages/Prediction/Prediction'
@@ -16,6 +16,8 @@ import AddDesease from "./pages/AddDesease/AddDesease";
 import DeseaseList from "./pages/deseaseList/deseaseList";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AddNewRemedies from './pages/Treat/AddNewRemedies'
+import RemedyList from './pages/Treat/RemedyList'
 
 const App = () => {
 
@@ -36,7 +38,9 @@ const App = () => {
             <Route path="/list" element={<DeseaseList url={url} />} />
 
 
-          <Route path="/AddNewRemedies" element={<AddNewRemedies url={url} />} />
+          <Route path="/remedies" element={<Remedies url={url} />} />
+            <Route path="/AddNewRemedies" element={<AddNewRemedies url={url} />} />
+            <Route path="/RemedyList" element={<RemedyList url={url} />} />
 
           <Route path="/user" element={<User/>}/>
 
