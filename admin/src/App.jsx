@@ -18,6 +18,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddNewRemedies from './pages/Treat/AddNewRemedies'
 import RemedyList from './pages/Treat/RemedyList'
+import RemedyDetail from './pages/Treat/RemedyDetail'
+import EditRemedy from './pages/Treat/EditRemedy'
+
 
 const App = () => {
 
@@ -41,6 +44,8 @@ const App = () => {
           <Route path="/remedies" element={<Remedies url={url} />} />
             <Route path="/AddNewRemedies" element={<AddNewRemedies url={url} />} />
             <Route path="/RemedyList" element={<RemedyList url={url} />} />
+            <Route path="/remedy/:id" element={<RemedyDetail url={url} />} />
+            <Route path="/edit-remedy/:id" element={<EditRemedy url={url} />} />
 
           <Route path="/user" element={<User/>}/>
 
