@@ -26,4 +26,5 @@ diseaseRouter.post("/remove",removeDisease)
 
 
 
+
 export default diseaseRouter;

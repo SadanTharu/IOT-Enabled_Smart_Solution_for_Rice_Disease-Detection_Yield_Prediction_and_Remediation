@@ -16,12 +16,12 @@ const Disease = () => {
           <Link to="/list" className="disease-action-main">
             <p>View Diseases</p>
           </Link>
-          <div className="disease-action-main">
-            <p>Update Disease</p>
-          </div>
-          <div className="disease-action-main">
-            <p>Delete Disease</p>
-          </div>
+          <Link to="/deseaseinfo" className="disease-action-main">
+            <p>Disease Info</p>
+          </Link>
+          <Link to="/contactremedy" className="disease-action-main">
+            <p>Contact Remedy Managemnt</p>
+          </Link>
         </div>
       </div>
     </div>

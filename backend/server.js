@@ -3,6 +3,7 @@ import cors from "cors"
 import { connectDB } from "./config/db.js"
 import diseaseRouter from './routes/diseaseRouter.js';
 import predictionRouter from './routes/predictionRouter.js';
+import diseaseRouterforRemedy from "./routes/contactRemedyRouter.js";
 
 //app configations
 const app = express()
@@ -19,6 +20,8 @@ connectDB();
 //matheesha
 app.use("/api/disease",diseaseRouter)
 app.use("/images",express.static('uploads'))
+
+app.use("/api/contactRemedy",diseaseRouterforRemedy)
 
 //sadan
 app.use("/api/prediction",predictionRouter)

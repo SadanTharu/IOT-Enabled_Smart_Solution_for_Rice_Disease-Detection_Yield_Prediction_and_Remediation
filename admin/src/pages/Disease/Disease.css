@@ -1,57 +1,63 @@
 /* Main container styling */
 .disease-container-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100%;
-    background-color: #e0f2f1; /* Light green background */
-    box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
-    margin-top: -90px; /* Negative margin to move up */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background-color: #ffffff; /* White background to remove color */
+  box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+  margin-top: -90px; /* Negative margin to move up */
+  border: 1.5px solid #a9a9a9; /* Match sidebar border */
+}
 
-  }
-  /* Heading styling */
-  .diseasetopiccontainner-main h1 {
-    color: #004d40; /* Dark green color */
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-  }
-  
-  /* Navigation buttons container styling */
-  .diseasetopiccontainner-2-main {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-  
-  /* Disease actions container styling */
-  .disease-actions-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  /* Individual action button styling */
-  .disease-action-main {
-    background-color: #00796b; /* Teal color */
-    color: white;
-    padding: 15px 30px;
-    margin: 10px 0;
-    text-align: center;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    text-decoration: none;
-    width: 200px;
-    transition: background-color 0.3s ease;
-  }
-  
-  /* Hover effect for action buttons */
-  .disease-action-main:hover {
-    background-color: #004d40; /* Dark green on hover */
-  }
-  
-  /* Button text styling */
-  .disease-action-main p {
-    margin: 0;
-  }
+/* Heading styling */
+/* Heading styling */
+.diseasetopiccontainner-main h1 {
+  color: #000000; /* Neutral black text color */
+  font-size: 2.5rem;
+  font-weight: normal; /* Remove bold */
+  margin-bottom: 20px;
+}
+
+
+/* Navigation buttons container styling */
+.diseasetopiccontainner-2-main {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Disease actions container styling */
+.disease-actions-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Individual action button styling */
+.disease-action-main {
+  background-color: #ffffff; /* No color, white background */
+  color: #000000; /* Neutral black text */
+  padding: 15px 30px;
+  margin: 10px 0;
+  text-align: center;
+  border: 1.5px solid #a9a9a9; /* Match sidebar border */
+  border-radius: 3px;
+  font-size: 1.2rem;
+  text-decoration: none;
+  width: 200px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover effect for action buttons */
+.disease-action-main:hover {
+  background-color: #f0f0f0; /* Light gray hover effect */
+  color: #000000;
+}
+
+/* Button text styling */
+.disease-action-main p {
+  margin: 0;
+}
