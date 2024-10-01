@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./FromInquery.css"; // Assuming a CSS file for styles
+import "./ViewDiseaseInquiry.css"; // Import the CSS file
 
 const ViewDiseaseInquiry = ({ url }) => {
   const [inquiries, setInquiries] = useState([]);
@@ -28,7 +28,7 @@ const ViewDiseaseInquiry = ({ url }) => {
 
   return (
     <div className="view-inquiry-container">
-      <h2>View Disease Inquiries</h2>
+      <h3>View Disease Inquiries</h3>
       <div className="inquiry-grid">
         {inquiries.length > 0 ? (
           inquiries.map((inquiry) => (

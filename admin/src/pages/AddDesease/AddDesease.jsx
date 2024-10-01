@@ -5,17 +5,21 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const AddDesease = ({ url }) => {
-  const [image, setImage] = useState(null); // Changed from false to null for better type consistency
+  const [image, setImage] = useState(null);
   const [data, setData] = useState({
     diseaseName: "",
     symptoms: "",
-    severityLevel: "",
-    category: "bacterial blind", // Ensure that the default value matches one of the options
+    severityLevel: 5, // Set default value to 5 for the slider
+    category: "bacterial blind",
   });
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
     setData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const onSeverityChange = (event) => {
+    setData((prevData) => ({ ...prevData, severityLevel: event.target.value }));
   };
 
   const onSubmitHandler = async (event) => {
@@ -32,11 +36,11 @@ const AddDesease = ({ url }) => {
       setData({
         diseaseName: "",
         symptoms: "",
-        severityLevel: "",
-        category: "D2",
+        severityLevel: 5, // Reset to default value
+        category: "bacterial blind",
       });
 
-      setImage(false);
+      setImage(null);
       toast.success(response.data.message);
     } else {
       toast.error(response.data.message);
@@ -58,11 +62,12 @@ const AddDesease = ({ url }) => {
             onChange={(e) => setImage(e.target.files[0])}
             type="file"
             id="image"
-            name="image" // Added name attribute
+            name="image"
             hidden
             required
           />
         </div>
+
         <div className="add-product-name flex-col">
           <p>Enter Disease Name</p>
           <input
@@ -71,9 +76,10 @@ const AddDesease = ({ url }) => {
             type="text"
             name="diseaseName"
             placeholder="enter disease name here"
-            required // Added required for validation
+            required
           />
         </div>
+
         <div className="add-product-description flex-col">
           <p>Predicted Symptoms of Disease</p>
           <textarea
@@ -85,14 +91,16 @@ const AddDesease = ({ url }) => {
             required
           />
         </div>
-        <div className="add-category-price">
-          <div className="add-category flex-col">
-            <p>Disease Category</p>
+
+        <div className="add-category flex-col">
+          <p>Disease Category</p>
+          <div className="custom-select-wrapper">
             <select
               onChange={onChangeHandler}
               name="category"
-              value={data.category} // Added value to sync state
-              required // Added required for validation
+              value={data.category}
+              className="custom-select"
+              required
             >
               <option value="BacterialBlind">Bacterial Blind</option>
               <option value="bacterialLeafSteak">Bacterial Leaf Steak</option>
@@ -103,17 +111,21 @@ const AddDesease = ({ url }) => {
             </select>
           </div>
         </div>
-        <div className="add-price flex-col">
-          <p>SeverityLevel of the Desease</p>
+
+        <div className="add-severity-level flex-col">
+          <p>Severity Level of the Disease (1 to 10)</p>
           <input
-            onChange={onChangeHandler}
+            type="range"
+            min="1"
+            max="10"
             value={data.severityLevel}
-            type="number"
+            onChange={onSeverityChange}
             name="severityLevel"
-            placeholder="10"
-            required // Added required for validation
+            className="slider"
           />
+          <p>Selected Severity Level: {data.severityLevel}</p>
         </div>
+
         <button type="submit" className="add-btn">
           Add Data to System
         </button>
