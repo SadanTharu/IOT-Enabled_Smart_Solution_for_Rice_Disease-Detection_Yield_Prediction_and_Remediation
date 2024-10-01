@@ -15,6 +15,7 @@ import AddDesease from "./pages/AddDesease/AddDesease";
 import DeseaseList from "./pages/deseaseList/deseaseList";
 import FromInquery from "./pages/FromInquery/FromInquery";
 import ContctRemedyManagement from "./pages/ContctRemedyManagement/ContactRemedyManagement";
+import ViewDiseaseInquiry from "./pages/FromInquery/ViewDiseaseInquiry";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -44,7 +45,10 @@ const App = () => {
 
           <Route path="/prediction" element={<Prediction />} />
 
-          <Route path="/deseaseinfo" element={<FromInquery url={url} />} />
+          <Route
+            path="/deseaseinfo"
+            element={<ViewDiseaseInquiry url={url} />}
+          />
           <Route
             path="/contactremedy"
             element={<ContctRemedyManagement url={url} />}
