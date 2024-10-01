@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./FromInquery.css";
-//import InquiryHeader from "../InquiryHeader/InquiryHeader";
-//import Header from "../../components/Header/Header";
+import "./FromInquery.css"; // Assuming a CSS file for styles
 
-const ViewDiseaseInquiry = () => {
+const ViewDiseaseInquiry = ({ url }) => {
   const [inquiries, setInquiries] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch the list of disease inquiries
   useEffect(() => {
     const fetchInquiries = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:4000/api/diseaseInquiry/list"
-        );
+        const response = await axios.get(`${url}/api/diseaseInquiry/list`);
         setInquiries(response.data.data);
         setLoading(false);
       } catch (error) {
@@ -23,7 +20,7 @@ const ViewDiseaseInquiry = () => {
     };
 
     fetchInquiries();
-  }, []);
+  }, [url]); // Fetch inquiries again if the `url` prop changes
 
   if (loading) {
     return <p>Loading...</p>;
@@ -31,19 +28,20 @@ const ViewDiseaseInquiry = () => {
 
   return (
     <div className="view-inquiry-container">
-      {/* <InquiryHeader /> */}
-      {/* <Header/> */}
       <h2>View Disease Inquiries</h2>
       <div className="inquiry-grid">
         {inquiries.length > 0 ? (
           inquiries.map((inquiry) => (
             <div key={inquiry._id} className="inquiry-card">
-              {inquiry.images && (
+              {/* Display image if available */}
+              {inquiry.images ? (
                 <img
-                  src={`http://localhost:4000/images/${inquiry.images}`}
+                  src={`${url}/images/${inquiry.images}`} // Dynamic image path
                   alt="Inquiry"
                   className="inquiry-image"
                 />
+              ) : (
+                <p>No Image Available</p> // Fallback if no image is provided
               )}
               <div className="inquiry-details">
                 <h3>{inquiry.farmerName}</h3>

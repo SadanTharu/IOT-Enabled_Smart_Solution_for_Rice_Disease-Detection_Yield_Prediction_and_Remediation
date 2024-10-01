@@ -13,7 +13,7 @@ import User from "./pages/User/User";
 import Prediction from "./pages/Prediction/Prediction";
 import AddDesease from "./pages/AddDesease/AddDesease";
 import DeseaseList from "./pages/deseaseList/deseaseList";
-import FromInquery from "./pages/FromInquery/FromInquery";
+//import FromInquery from "./pages/FromInquery/FromInquery";
 import ContctRemedyManagement from "./pages/ContctRemedyManagement/ContactRemedyManagement";
 import ViewDiseaseInquiry from "./pages/FromInquery/ViewDiseaseInquiry";
 import { ToastContainer } from "react-toastify";
