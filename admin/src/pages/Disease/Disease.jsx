@@ -14,22 +14,22 @@ const Disease = () => {
           <Link to="/adddesease" className="disease-action-main">
             <img src={assets.dashboard_icon} alt="" />
 
-            <p>Add Disease</p>
+            <p>Add New Disease</p>
           </Link>
           <Link to="/list" className="disease-action-main">
             <img src={assets.disease_icon} alt="" />
 
-            <p>View Diseases</p>
+            <p>View Added Diseases</p>
           </Link>
           <Link to="/deseaseinfo" className="disease-action-main">
             <img src={assets.disease_icon} alt="" />
 
-            <p>Disease Info</p>
+            <p>Newly Discovered</p>
           </Link>
           <Link to="/contactremedy" className="disease-action-main">
             <img src={assets.user_icon} alt="" />
 
-            <p>Contact Managemnt</p>
+            <p>Remedy Managemnt</p>
           </Link>
         </div>
       </div>

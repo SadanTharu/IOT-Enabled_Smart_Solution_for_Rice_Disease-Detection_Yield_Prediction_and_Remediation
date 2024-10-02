@@ -3,27 +3,29 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Align content to the top */
+  padding-top: 20px; /* Add padding to push content slightly from the top */
   height: 100vh;
   width: 100%;
-  background-color: #ffffff; /* White background to remove color */
-  box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
-  margin-top: -90px; /* Negative margin to move up */
-  border: 1.5px solid #a9a9a9; /* Match sidebar border */
+  background-color: #ffffff;
+  background-image: url('../../assets/diseasebackground.png'); /* Path to the background image */
+  background-size: cover; /* Make the image cover the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  box-sizing: border-box;
 }
 
-/* Heading styling */
 /* Heading styling */
 .diseasetopiccontainner-main h1 {
-  color: #000000; /* Neutral black text color */
+  color: #676363; /* Neutral black text color */
   font-size: 2.5rem;
-  font-weight: normal; /* Remove bold */
-  margin-bottom: 20px;
+  font-weight: normal;
+  margin-top: 30px;
 }
-
 
 /* Navigation buttons container styling */
 .diseasetopiccontainner-2-main {
+  margin-top: 70px;
   display: flex;
   justify-content: center;
   width: 100%;
@@ -34,17 +36,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
 
 /* Individual action button styling */
 .disease-action-main {
-  background-color: #ffffff; /* No color, white background */
-  color: #000000; /* Neutral black text */
+  background-color: #ffffff;
+  color: #000000;
   padding: 15px 30px;
   margin: 10px 0;
   text-align: center;
-  border: 1.5px solid #a9a9a9; /* Match sidebar border */
+  border: 1.5px solid #a9a9a9;
   border-radius: 3px;
   font-size: 1.2rem;
   text-decoration: none;
@@ -54,7 +55,7 @@
 
 /* Hover effect for action buttons */
 .disease-action-main:hover {
-  background-color: #f0f0f0; /* Light gray hover effect */
+  background-color: #f0f0f0;
   color: #000000;
 }
 

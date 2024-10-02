@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const ContactRemedyManagement = ({ url }) => {
-  const [image, setImage] = useState(null); // Changed from false to null for better type consistency
+  const [image, setImage] = useState(null);
   const [data, setData] = useState({
     newDiseaseName: "",
     symptoms: "",
@@ -13,6 +13,20 @@ const ContactRemedyManagement = ({ url }) => {
     category: "bacterial blind",
     recomendedTreatment: "", // Ensure that the default value matches one of the options
   });
+
+  const treatments = [
+    "Tricyclazole",
+    "Isoprothiolane",
+    "Carbendazim",
+    "Azoxystrobin",
+    "Validamycin",
+    "Tebuconazole",
+    "Mancozeb",
+    "Propiconazole",
+    "Copper-based Bactericides",
+    "Thiophanate-methyl",
+    "Difenoconazole",
+  ];
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -42,7 +56,7 @@ const ContactRemedyManagement = ({ url }) => {
         recomendedTreatment: "",
       });
 
-      setImage(false);
+      setImage(null);
       toast.success(response.data.message);
     } else {
       toast.error(response.data.message);
@@ -64,7 +78,7 @@ const ContactRemedyManagement = ({ url }) => {
             onChange={(e) => setImage(e.target.files[0])}
             type="file"
             id="image"
-            name="image" // Added name attribute
+            name="image"
             hidden
             required
           />
@@ -76,8 +90,8 @@ const ContactRemedyManagement = ({ url }) => {
             value={data.newDiseaseName}
             type="text"
             name="newDiseaseName"
-            placeholder="enter newly discovered disease name here"
-            required // Added required for validation
+            placeholder="Enter newly discovered disease name here"
+            required
           />
         </div>
         <div className="add-product-description flex-col">
@@ -93,12 +107,12 @@ const ContactRemedyManagement = ({ url }) => {
         </div>
         <div className="add-category-price">
           <div className="add-category flex-col">
-            <p>enter suggested Disease Category</p>
+            <p>Enter suggested Disease Category</p>
             <select
               onChange={onChangeHandler}
               name="category"
-              value={data.category} // Added value to sync state
-              required // Added required for validation
+              value={data.category}
+              required
             >
               <option value="BacterialBlind">Bacterial Blind</option>
               <option value="bacterialLeafSteak">Bacterial Leaf Steak</option>
@@ -123,15 +137,20 @@ const ContactRemedyManagement = ({ url }) => {
           <span>{data.severityLevel}</span>
         </div>
         <div className="add-price flex-col">
-          <p>recomendedTreatment forthe Desease</p>
-          <input
+          <p>Recommended Treatment For the Disease</p>
+          <select
             onChange={onChangeHandler}
-            value={data.recomendedTreatment}
-            type="number"
             name="recomendedTreatment"
-            placeholder="10"
-            required // Added required for validation
-          />
+            value={data.recomendedTreatment}
+            required
+          >
+            <option value="">Select a treatment</option>
+            {treatments.map((treatment, index) => (
+              <option key={index} value={treatment}>
+                {treatment}
+              </option>
+            ))}
+          </select>
         </div>
 
         <button type="submit" className="add-btn">

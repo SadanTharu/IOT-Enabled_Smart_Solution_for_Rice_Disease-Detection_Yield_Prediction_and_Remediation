@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./ViewDiseaseInquiry.css"; // Import the CSS file
+import "./ViewDiseaseInquiry.css";
+import jsPDF from "jspdf"; // Import jsPDF for PDF generation
+import "jspdf-autotable"; // Import jsPDF plugin for table formatting
 
 const ViewDiseaseInquiry = ({ url }) => {
   const [inquiries, setInquiries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Fetch the list of disease inquiries
   useEffect(() => {
@@ -20,30 +23,70 @@ const ViewDiseaseInquiry = ({ url }) => {
     };
 
     fetchInquiries();
-  }, [url]); // Fetch inquiries again if the `url` prop changes
+  }, [url]);
+
+  // Search function to filter inquiries based on farmer name or inquiry topic
+  const filteredInquiries = inquiries.filter(
+    (inquiry) =>
+      inquiry.farmerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      inquiry.inquiryTopic.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Function to generate report as PDF
+  const generateReport = () => {
+    const doc = new jsPDF();
+    doc.text("Disease Inquiries Report", 20, 10);
+    doc.autoTable({
+      head: [
+        ["Farmer Name", "Email", "Phone", "Inquiry Date", "Location", "Topic"],
+      ],
+      body: filteredInquiries.map((inquiry) => [
+        inquiry.farmerName,
+        inquiry.email,
+        inquiry.phone,
+        new Date(inquiry.inquiryDate).toLocaleDateString(),
+        inquiry.location,
+        inquiry.inquiryTopic,
+      ]),
+    });
+    doc.save("disease_inquiries_report.pdf");
+  };
 
   if (loading) {
     return <p>Loading...</p>;
   }
 
   return (
-    <div className="view-inquiry-container">
+    <div className="disease-in-view-inquiry-container">
       <h3>View Disease Inquiries</h3>
-      <div className="inquiry-grid">
-        {inquiries.length > 0 ? (
-          inquiries.map((inquiry) => (
-            <div key={inquiry._id} className="inquiry-card">
+
+      {/* Search Bar */}
+      <div className="disease-in-search-bar">
+        <input
+          type="text"
+          placeholder="Search by farmer name or inquiry topic"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button onClick={generateReport}>Generate Report</button>
+      </div>
+
+      {/* Inquiry List */}
+      <div className="disease-in-inquiry-grid">
+        {filteredInquiries.length > 0 ? (
+          filteredInquiries.map((inquiry) => (
+            <div key={inquiry._id} className="disease-in-inquiry-card">
               {/* Display image if available */}
               {inquiry.images ? (
                 <img
-                  src={`${url}/images/${inquiry.images}`} // Dynamic image path
+                  src={`${url}/images/${inquiry.images}`}
                   alt="Inquiry"
-                  className="inquiry-image"
+                  className="disease-in-inquiry-image"
                 />
               ) : (
-                <p>No Image Available</p> // Fallback if no image is provided
+                <p>No Image Available</p>
               )}
-              <div className="inquiry-details">
+              <div className="disease-in-inquiry-details">
                 <h3>{inquiry.farmerName}</h3>
                 <p>
                   <strong>Email:</strong> {inquiry.email}

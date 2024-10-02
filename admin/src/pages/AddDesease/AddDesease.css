@@ -63,7 +63,7 @@
    width: 25px;
    height: 25px;
    border-radius: 50%;
-   background: #4caf50;
+   background: #6d6d6d;
    cursor: pointer;
  }
  
@@ -158,3 +158,6 @@
    padding: 8px 10px;
  }
  
+ .add-severity-level p{
+  color: red;
+ }

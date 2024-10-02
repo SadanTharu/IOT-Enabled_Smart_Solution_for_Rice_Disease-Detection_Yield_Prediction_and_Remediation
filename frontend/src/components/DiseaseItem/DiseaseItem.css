@@ -1,4 +1,4 @@
-.food-item{
+.disease-item{
     width: 100%;
     margin: auto;
     border-radius: 15px;
@@ -6,16 +6,16 @@
     transition: 0.3s;
     animation: fadeIn 1s;
 }
-.food-item-image{
+.disease-item-image{
     width :100%;
     border-radius: 15px 15px 0px 0px;
 
 }
-.food-item-info{
+.disease-item-info{
     padding: 20px;
 }
 
-.food-item-name-rating{
+.disease-item-name-rating{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -25,34 +25,34 @@
 
 
 
-.food-item-name-rating p {
+.disease-item-name-rating p {
     font-size: 20px;
     font-weight: 500;
 }
 
-.food-item-name-rating img {
+.disease-item-name-rating img {
 
     width: 70px;
 
 }
-.food-item-desc{
+.disease-item-desc{
 
     color: 676767;
     font-size: 12px;
 
 }
-.food-item-price{
+.disease-item-price{
     color: tomato;
     font-size: 22px;
     font-weight: 500;
     margin: 10px 0px;
 }
-.food-item-img-container{
+.disease-item-img-container{
     position: relative;
 
 }
 
-.food-item-img-container .add{
+.disease-item-img-container .add{
     width: 35px;
     position: absolute;
     bottom: 15px;
@@ -61,7 +61,7 @@
     border-radius: 50%;
 }
 
-.food-item-counter{
+.disease-item-counter{
     position: absolute;
     bottom: 15px;
     right: 15px;
