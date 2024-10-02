@@ -1,19 +1,47 @@
-import React , { useState } from 'react'
+import React, { useState } from 'react';
 import "./Prediction.css";
-import axios from 'axios'
-import { toast } from 'react-toastify'
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Prediction = () => {
-  const url = "http://localhost:4000"
+  const url = "http://localhost:5000"; // Adjusted URL to match Flask server
 
+  // State for form data and prediction result
   const [data, setData] = useState({
-    cropType: "paddy",
-    location: "",
-    fieldSize: "",
-    plantingDate: "",
-    disease: "",
-    diseaseSpreadSize: "",
+    Year: '',
+    average_rain_fall_mm_per_year: '',
+    pesticides_tonnes: '',
+    avg_temp: '',
+    Area: '',
+    Item: ''
   });
+
+  const [prediction, setPrediction] = useState(null); // State to store prediction
+
+  const countries = [
+    "Albania", "Algeria", "Angola", "Argentina", "Armenia", "Australia",
+    "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Belarus",
+    "Belgium", "Botswana", "Brazil", "Bulgaria", "Burkina Faso", "Burundi",
+    "Cameroon", "Canada", "Central African Republic", "Chile", "Colombia",
+    "Croatia", "Denmark", "Dominican Republic", "Ecuador", "Egypt",
+    "El Salvador", "Eritrea", "Estonia", "Finland", "France", "Germany",
+    "Ghana", "Greece", "Guatemala", "Guinea", "Guyana", "Haiti",
+    "Honduras", "Hungary", "India", "Indonesia", "Iraq", "Ireland", "Italy",
+    "Jamaica", "Japan", "Kazakhstan", "Kenya", "Latvia", "Lebanon",
+    "Lesotho", "Libya", "Lithuania", "Madagascar", "Malawi", "Malaysia",
+    "Mali", "Mauritania", "Mauritius", "Mexico", "Montenegro", "Morocco",
+    "Mozambique", "Namibia", "Nepal", "Netherlands", "New Zealand",
+    "Nicaragua", "Niger", "Norway", "Pakistan", "Papua New Guinea", "Peru",
+    "Poland", "Portugal", "Qatar", "Romania", "Rwanda", "Saudi Arabia",
+    "Senegal", "Slovenia", "South Africa", "Spain", "Sri Lanka", "Sudan",
+    "Suriname", "Sweden", "Switzerland", "Tajikistan", "Thailand", "Tunisia",
+    "Turkey", "Uganda", "Ukraine", "United Kingdom", "Uruguay", "Zambia", "Zimbabwe"
+  ];
+
+  const crops = [
+    "Maize", "Potatoes", "Rice (paddy)", "Sorghum", "Soybeans", "Wheat",
+    "Cassava", "Sweet potatoes", "Plantains and others", "Yams"
+  ];
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -23,77 +51,99 @@ const Prediction = () => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     
+    const formattedData = {
+      Year: parseFloat(data.Year),
+      average_rain_fall_mm_per_year: parseFloat(data.average_rain_fall_mm_per_year),
+      pesticides_tonnes: parseFloat(data.pesticides_tonnes),
+      avg_temp: parseFloat(data.avg_temp),
+      Area: data.Area,
+      Item: data.Item
+    };
+
     try {
-      // Send data as JSON rather than FormData
-      const response = await axios.post(`${url}/api/prediction/add`, data);
+      const response = await axios.post(`${url}/predict`, formattedData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
       
-      if (response.data.success) {
+      if (response.data) {
+        setPrediction(response.data.prediction); // Set prediction result in state
+        toast.success(`Predicted Yield: ${response.data.prediction}`);
         setData({
-          cropType: "paddy",
-          location: "",
-          fieldSize: "",
-          plantingDate: "",
-          disease: "",
-          diseaseSpreadSize: "",
+          Year: '',
+          average_rain_fall_mm_per_year: '',
+          pesticides_tonnes: '',
+          avg_temp: '',
+          Area: '',
+          Item: ''
         });
-        toast.success(response.data.message);
       } else {
-        toast.error(response.data.message);
+        toast.error("Failed to get prediction.");
       }
     } catch (error) {
-      toast.error("An error occurred while adding the data. Please try again.");
+      toast.error("An error occurred while predicting the yield. Please try again.");
       console.error(error);
     }
   };
 
   return (
     <div className='prediction' id='prediction'>
-      <h1>Yield Prediction</h1>
-      <p id ='underconstruction'>"ML part" We're currently working on this section and it will be available soon. Thank you for your patience!</p>
+      <h1>Crop Yield Prediction</h1>
       <div className="formcss">
-      <form className="flex-col"  onSubmit={onSubmitHandler}>
-        <div className="formside">
-          <div className="add-type flex-col">
-            <p>Crop Type</p>
-            <select onChange={onChangeHandler} name="cropType" value={data.cropType} required >
-              <option value="paddy">Paddy</option>
-              <option value="tea">Tea</option>
-              <option value="coconut">Coconut</option>
-              <option value="rubber">Rubber</option>
-              <option value="riceBlast">Rice Blast</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div className="add-location flex-col">
-            <p>Location</p>
-            <input onChange={onChangeHandler} value={data.location} type="text" name="location" placeholder="Enter Location Name Here" required />
-          </div>
-          <div className="add-size flex-col">
-            <p>Field Size</p>
-            <input onChange={onChangeHandler} value={data.fieldSize} type="number" name="fieldSize" placeholder="Hectare" required />
-          </div>
-        </div>
-        <div className="formside">
-          <div className="add-date flex-col">
-              <p>Planting Date</p>
-              <input onChange={onChangeHandler} value={data.plantingDate} type="date" name="plantingDate" placeholder="Enter Planting Date" required />
+        <form className="flex-col" onSubmit={onSubmitHandler}>
+          <div className="formside">
+            <div className="add-year flex-col">
+              <p>Year</p>
+              <input onChange={onChangeHandler} value={data.Year} type="number" name="Year" placeholder="Enter Year" required />
             </div>
-          <div className="add-disease flex-col">
-            <p>Disease</p>
-            <input onChange={onChangeHandler} value={data.disease} type="text" name="disease" placeholder="Enter Disease Name Here"/>
+            <div className="add-rainfall flex-col">
+              <p>Average Rainfall (mm/year)</p>
+              <input onChange={onChangeHandler} value={data.average_rain_fall_mm_per_year} type="number" name="average_rain_fall_mm_per_year" placeholder="Average Rainfall (mm)" required />
+            </div>
+            <div className="add-pesticides flex-col">
+              <p>Pesticides (tonnes)</p>
+              <input onChange={onChangeHandler} value={data.pesticides_tonnes} type="number" name="pesticides_tonnes" placeholder="Pesticides (tonnes)" required />
+            </div>
           </div>
-          <div className="add-size flex-col">
-            <p>Disease Spread Size</p>
-            <input onChange={onChangeHandler} value={data.diseaseSpreadSize} type="number" name="diseaseSpreadSize" placeholder="Hectare"/>
+          <div className="formside">
+            <div className="add-temperature flex-col">
+              <p>Average Temperature (°C)</p>
+              <input onChange={onChangeHandler} value={data.avg_temp} type="number" name="avg_temp" placeholder="Average Temperature (°C)" required />
+            </div>
+            <div className="add-area flex-col">
+              <p>Area (Country)</p>
+              <select onChange={onChangeHandler} name="Area" value={data.Area} required>
+                <option value="">Select Country</option>
+                {countries.map((country) => (
+                  <option key={country} value={country}>{country}</option>
+                ))}
+              </select>
+            </div>
+            <div className="add-item flex-col">
+              <p>Item (Crop)</p>
+              <select onChange={onChangeHandler} name="Item" value={data.Item} required>
+                <option value="">Select Crop</option>
+                {crops.map((crop) => (
+                  <option key={crop} value={crop}>{crop}</option>
+                ))}
+              </select>
+            </div>
           </div>
-        </div>
-        <button type="submit" className="add-btn">
-          Add Data to System
-        </button>
-      </form>
+          <button type="submit" className="add-btn">
+            Predict
+          </button>
+        </form>
+        {/* Display the prediction result below the form */}
+        {prediction && (
+          <div className="prediction-result">
+            <h2>Predicted Yield:</h2>
+            <p>{prediction}</p>
+          </div>
+        )}
       </div>
     </div>
-  )
+  );
 }
 
-export default Prediction
+export default Prediction;
