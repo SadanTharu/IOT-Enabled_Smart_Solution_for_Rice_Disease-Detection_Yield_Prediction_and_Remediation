@@ -1,10 +1,8 @@
 import express from 'express';
-import { addPrediction, predictionList, removePrediction } from '../controllers/predictionController.js';
+import { predictCropYield } from '../controllers/predictionController.js';
 
-const predictionRouter = express.Router();
+const router = express.Router();
 
-predictionRouter.post("/add",addPrediction)
-predictionRouter.get("/list",predictionList)
-predictionRouter.post("/remove",removePrediction)
+router.post('/', predictCropYield);
 
-export default predictionRouter;
+export default router;
