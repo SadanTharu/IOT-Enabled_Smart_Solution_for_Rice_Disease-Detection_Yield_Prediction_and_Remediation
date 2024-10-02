@@ -11,12 +11,16 @@ import AddNewRemedies from "./pages/Treat/AddNewRemedies";
 
 import User from "./pages/User/User";
 import Prediction from "./pages/Prediction/Prediction";
+import Remedies from './pages/Treat/TreatmentDashboard'
+
 import AddDesease from "./pages/AddDesease/AddDesease";
 import DeseaseList from "./pages/deseaseList/deseaseList";
 import ContctRemedyManagement from "./pages/ContctRemedyManagement/ContactRemedyManagement";
 import ViewDiseaseInquiry from "./pages/ViewDiseaseInquiry/ViewDiseaseInquiry";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AddNewRemedies from './pages/Treat/AddNewRemedies'
+import RemedyList from './pages/Treat/RemedyList'
 
 const App = () => {
   const url = "http://localhost:4000";
@@ -35,10 +39,7 @@ const App = () => {
           <Route path="/adddesease" element={<AddDesease url={url} />} />
           <Route path="/list" element={<DeseaseList url={url} />} />
 
-          <Route
-            path="/AddNewRemedies"
-            element={<AddNewRemedies url={url} />}
-          />
+          <Route path="/AddNewRemedies" element={<AddNewRemedies url={url} />} />
 
           <Route path="/user" element={<User />} />
 
