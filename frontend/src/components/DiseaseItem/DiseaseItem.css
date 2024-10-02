@@ -72,3 +72,6 @@
     display: flex;
     align-items: center;
 }
+.disease-item-case-count{
+    color: red;
+}

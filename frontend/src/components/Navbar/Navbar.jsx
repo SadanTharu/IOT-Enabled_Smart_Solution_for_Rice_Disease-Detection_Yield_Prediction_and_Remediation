@@ -49,11 +49,6 @@ const Navbar = () => {
         </a>
       </ul>
       <div className="navbar-right">
-        <div className="navbar-search-icon">
-          <Link to={"/report"}>
-            <img src={assets.basket_icon} alt="" />{" "}
-          </Link>
-        </div>
         <button>Sign In</button>
       </div>
     </div>
