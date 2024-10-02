@@ -36,8 +36,13 @@ input, select {
   border-radius: 4px;
 }
 
-button {
-  margin-top: 20px;
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px; /* Add margin to the container */
+}
+
+.btn-submit {
   padding: 8px 16px; /* Narrower padding */
   border: none;
   border-radius: 4px;
@@ -45,10 +50,26 @@ button {
   color: white;
   font-size: 16px;
   cursor: pointer;
+  width: 48%; /* Make the buttons take equal space */
 }
 
-button:hover {
+.btn-cancel{
+  padding: 8px 16px; /* Narrower padding */
+  border: none;
+  border-radius: 4px;
+  background-color: #c0392b; /* Green */
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  width: 48%; /* Make the buttons take equal space */
+}
+
+.btn-submit:hover {
   background-color: #45a049; /* Darker green */
+}
+
+.btn-cancel:hover {
+  background-color: #922b21; /* Darker green */
 }
 
 .notification {

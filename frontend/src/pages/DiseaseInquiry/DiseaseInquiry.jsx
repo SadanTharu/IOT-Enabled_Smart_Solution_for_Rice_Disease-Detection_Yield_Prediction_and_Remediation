@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './DiseaseInquiry.css'
+import './DiseaseInquiry.css';
 import InquiryHeader from '../InquiryHeader/InquiryHeader';
-
 
 const DiseaseInquiry = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +15,7 @@ const DiseaseInquiry = () => {
     symptoms: '',
     area: '',
     priorityLevel: '',
-    images: null
+    images: null,
   });
 
   const [notification, setNotification] = useState(null);
@@ -48,6 +47,7 @@ const DiseaseInquiry = () => {
 
       if (response.data.success) {
         setNotification({ message: 'Disease Inquiry Added Successfully', type: 'success' });
+        // Reset the form after successful submission
         setFormData({
           farmerName: '',
           email: '',
@@ -58,9 +58,10 @@ const DiseaseInquiry = () => {
           symptoms: '',
           area: '',
           priorityLevel: '',
-          images: null
+          images: null,
         });
 
+        // Navigate to viewDiseaseInquiry page
         navigate('/viewDiseaseInquiry');
 
       } else {
@@ -69,6 +70,26 @@ const DiseaseInquiry = () => {
     } catch (error) {
       setNotification({ message: 'Error adding Disease Inquiry', type: 'error' });
     }
+  };
+
+  // Handle form reset when the Cancel button is clicked
+  const handleCancel = () => {
+    // Reset the form to its initial state
+    setFormData({
+      farmerName: '',
+      email: '',
+      phone: '',
+      inquiryDate: '',
+      location: '',
+      inquiryTopic: '',
+      symptoms: '',
+      area: '',
+      priorityLevel: '',
+      images: null,
+    });
+
+    // Optionally, clear any notifications if necessary
+    setNotification(null);
   };
 
   return (
@@ -146,8 +167,13 @@ const DiseaseInquiry = () => {
             </tr>
           </tbody>
         </table>
-        <button type="submit">Submit Inquiry</button>
+        <div className='button-container'>
+          <button className='btn-submit' type="submit">Submit </button>
+          {/* Added the onClick handler for the Cancel button */}
+          <button className='btn-cancel' type="button" onClick={handleCancel}>Cancel</button>
+        </div>
       </form>
+      {/* Display the notification if it exists */}
       {notification && <p className={`notification ${notification.type}`}>{notification.message}</p>}
     </div>
   );
