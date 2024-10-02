@@ -1,43 +1,59 @@
 import React, { useState } from "react";
-import "./AddDesease.css";
+import "./ContactRemedyManagement.css";
 import { assets } from "../../assets/assets";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const AddDesease = ({ url }) => {
+const ContactRemedyManagement = ({ url }) => {
   const [image, setImage] = useState(null);
   const [data, setData] = useState({
-    diseaseName: "",
+    newDiseaseName: "",
     symptoms: "",
-    severityLevel: 5, // Set default value to 5 for the slider
+    severityLevel: 5,
     category: "bacterial blind",
+    recomendedTreatment: "", // Ensure that the default value matches one of the options
   });
+
+  const treatments = [
+    "Tricyclazole",
+    "Isoprothiolane",
+    "Carbendazim",
+    "Azoxystrobin",
+    "Validamycin",
+    "Tebuconazole",
+    "Mancozeb",
+    "Propiconazole",
+    "Copper-based Bactericides",
+    "Thiophanate-methyl",
+    "Difenoconazole",
+  ];
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
     setData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const onSeverityChange = (event) => {
-    setData((prevData) => ({ ...prevData, severityLevel: event.target.value }));
-  };
-
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append("diseaseName", data.diseaseName);
+    formData.append("newDiseaseName", data.newDiseaseName);
     formData.append("symptoms", data.symptoms);
     formData.append("severityLevel", Number(data.severityLevel));
     formData.append("category", data.category);
+    formData.append("recomendedTreatment", data.recomendedTreatment);
     formData.append("image", image);
 
-    const response = await axios.post(`${url}/api/disease/add`, formData);
+    const response = await axios.post(
+      `${url}/api/contactRemedy/addDataForRemedy`,
+      formData
+    );
     if (response.data.success) {
       setData({
-        diseaseName: "",
+        newDiseaseName: "",
         symptoms: "",
-        severityLevel: 5, // Reset to default value
-        category: "bacterial blind",
+        severityLevel: 5,
+        category: "D2",
+        recomendedTreatment: "",
       });
 
       setImage(null);
@@ -67,19 +83,17 @@ const AddDesease = ({ url }) => {
             required
           />
         </div>
-
         <div className="add-product-name flex-col">
           <p>Enter Disease Name</p>
           <input
             onChange={onChangeHandler}
-            value={data.diseaseName}
+            value={data.newDiseaseName}
             type="text"
-            name="diseaseName"
-            placeholder="enter disease name here"
+            name="newDiseaseName"
+            placeholder="Enter newly discovered disease name here"
             required
           />
         </div>
-
         <div className="add-product-description flex-col">
           <p>Predicted Symptoms of Disease</p>
           <textarea
@@ -91,15 +105,13 @@ const AddDesease = ({ url }) => {
             required
           />
         </div>
-
-        <div className="add-category flex-col">
-          <p>Disease Category</p>
-          <div className="custom-select-wrapper">
+        <div className="add-category-price">
+          <div className="add-category flex-col">
+            <p>Enter suggested Disease Category</p>
             <select
               onChange={onChangeHandler}
               name="category"
               value={data.category}
-              className="custom-select"
               required
             >
               <option value="BacterialBlind">Bacterial Blind</option>
@@ -111,19 +123,34 @@ const AddDesease = ({ url }) => {
             </select>
           </div>
         </div>
-
-        <div className="add-severity-level flex-col">
-          <p>Severity Level of the Disease (1 to 10)</p>
+        <div className="add-severity flex-col">
+          <p>Severity Level of the Disease</p>
           <input
             type="range"
+            name="severityLevel"
             min="1"
             max="10"
             value={data.severityLevel}
-            onChange={onSeverityChange}
-            name="severityLevel"
+            onChange={onChangeHandler}
             className="slider"
           />
-          <p>Selected Severity Level: {data.severityLevel}</p>
+          <span>{data.severityLevel}</span>
+        </div>
+        <div className="add-price flex-col">
+          <p>Recommended Treatment For the Disease</p>
+          <select
+            onChange={onChangeHandler}
+            name="recomendedTreatment"
+            value={data.recomendedTreatment}
+            required
+          >
+            <option value="">Select a treatment</option>
+            {treatments.map((treatment, index) => (
+              <option key={index} value={treatment}>
+                {treatment}
+              </option>
+            ))}
+          </select>
         </div>
 
         <button type="submit" className="add-btn">
@@ -134,4 +161,4 @@ const AddDesease = ({ url }) => {
   );
 };
 
-export default AddDesease;
+export default ContactRemedyManagement;

@@ -18,10 +18,12 @@ const DiseaseItem = ({ id, diseaseName, severityLevel, symptoms, image }) => {
       <div className="disease-item-info">
         <div className="disease-item-name-rating">
           <p>{diseaseName}</p>
-          <img src={assets.rating_stars} alt="rating" />
         </div>
         <p className="disease-item-desc">{symptoms}</p>
-        <p className="disease-item-case-count">{severityLevel} cases</p>
+        <p className="disease-item-case-count">
+          {" "}
+          Severity Level: {severityLevel}{" "}
+        </p>
       </div>
     </div>
   );
