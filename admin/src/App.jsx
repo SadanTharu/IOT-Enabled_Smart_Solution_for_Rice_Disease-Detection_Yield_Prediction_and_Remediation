@@ -1,47 +1,56 @@
-import React from 'react'
-import Navbar from './components/Navbar/Navbar'
-import Sidebar from './components/Sidebar/Sidebar'
+import React from "react";
+import Navbar from "./components/Navbar/Navbar";
+import Sidebar from "./components/Sidebar/Sidebar";
 
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes } from "react-router-dom";
 
-import Dashboard from './pages/Dashboard/Dashboard'
-import Disease from './pages/Disease/Disease'
-import Treat from './pages/Treat/Treat'
-import User from './pages/User/User'
-import Prediction from './pages/Prediction/Prediction'
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Disease from "./pages/Disease/Disease";
+
+import User from "./pages/User/User";
+import Prediction from "./pages/Prediction/Prediction";
+
 import AddDesease from "./pages/AddDesease/AddDesease";
 import DeseaseList from "./pages/deseaseList/deseaseList";
+import ContctRemedyManagement from "./pages/ContctRemedyManagement/ContactRemedyManagement";
+import ViewDiseaseInquiry from "./pages/ViewDiseaseInquiry/ViewDiseaseInquiry";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
-
-  const url = "http://localhost:4000"
+  const url = "http://localhost:4000";
 
   return (
     <div>
       <ToastContainer />
-      <Navbar/>
-      <hr/>
+      <Navbar />
+      <hr />
       <div className="app-content">
-        <Sidebar/>
+        <Sidebar />
         <Routes>
-          <Route path="/dashboard" element={<Dashboard/>}/>
+          <Route path="/dashboard" element={<Dashboard />} />
 
-          <Route path="/disease" element={<Disease url={url} />}/>
-            <Route path="/adddesease" element={<AddDesease url={url} />} />
-            <Route path="/list" element={<DeseaseList url={url} />} />
+          <Route path="/disease" element={<Disease url={url} />} />
+          <Route path="/adddesease" element={<AddDesease url={url} />} />
+          <Route path="/list" element={<DeseaseList url={url} />} />
 
-          <Route path="/treat" element={<Treat url={url} />}/>
 
-          <Route path="/user" element={<User/>}/>
+          <Route path="/user" element={<User />} />
 
-          <Route path="/prediction" element={<Prediction/>}/>
+          <Route path="/prediction" element={<Prediction />} />
 
+          <Route
+            path="/deseaseinfo"
+            element={<ViewDiseaseInquiry url={url} />}
+          />
+          <Route
+            path="/contactremedy"
+            element={<ContctRemedyManagement url={url} />}
+          />
         </Routes>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

@@ -1,6 +1,7 @@
-import React from 'react'
+import React from "react";
 import { Link } from "react-router-dom";
 import "./Disease.css";
+import { assets } from "../../assets/assets";
 
 const Disease = () => {
   return (
@@ -11,23 +12,29 @@ const Disease = () => {
       <div className="diseasetopiccontainner-2-main">
         <div className="disease-actions-main">
           <Link to="/adddesease" className="disease-action-main">
-            <p>Add Disease</p>
+            <img src={assets.dashboard_icon} alt="" />
+
+            <p>Add New Disease</p>
           </Link>
-          <div className="disease-action-main">
-            <Link to="/list" className="disease-action-main">
-              <p>View Diseases</p>
-            </Link>
-          </div>
-          <div className="disease-action-main">
-            <p>Update Disease</p>
-          </div>
-          <div className="disease-action-main">
-            <p>Delete Disease</p>
-          </div>
+          <Link to="/list" className="disease-action-main">
+            <img src={assets.disease_icon} alt="" />
+
+            <p>View Added Diseases</p>
+          </Link>
+          <Link to="/deseaseinfo" className="disease-action-main">
+            <img src={assets.disease_icon} alt="" />
+
+            <p>Newly Discovered</p>
+          </Link>
+          <Link to="/contactremedy" className="disease-action-main">
+            <img src={assets.user_icon} alt="" />
+
+            <p>Remedy Managemnt</p>
+          </Link>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Disease
+export default Disease;
