@@ -52,12 +52,13 @@ const DeseaseList = ({ url }) => {
     <div className="list add flex-col">
       <p>All Disease Data</p>
       <div className="list-table">
-        <div className="list-table-format">
+        <div className="list-table-format title">
           <b>Image</b>
           <b>Disease Name</b>
           <b>Category</b>
           <b>Severity Level</b>
-          <b>Actions</b>
+          <b>Update</b> {/* Header for Update button */}
+          <b>Delete</b> {/* Header for Delete button */}
         </div>
         {list.length > 0 ? (
           list.map((item, index) => (
@@ -66,12 +67,18 @@ const DeseaseList = ({ url }) => {
               <p>{item.diseaseName}</p>
               <p>{item.category}</p>
               <p>{item.severityLevel}</p>
-              <div>
-                <button onClick={() => handleUpdate(item._id)}>Update</button>
-                <p onClick={() => removeDesease(item._id)} className="cursor">
-                  X
-                </p>
-              </div>
+              <button
+                className="update-button"
+                onClick={() => handleUpdate(item._id)}
+              >
+                Update
+              </button>
+              <p
+                onClick={() => removeDesease(item._id)}
+                className="delete-icon"
+              >
+                X
+              </p>
             </div>
           ))
         ) : (

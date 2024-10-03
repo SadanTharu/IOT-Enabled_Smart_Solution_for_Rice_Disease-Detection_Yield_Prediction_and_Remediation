@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import "./UpdateDisease.css"; // Import the CSS file
 
 const UpdateDisease = ({ url = "http://localhost:4000" }) => {
   const { id } = useParams(); // Get the disease ID from the URL parameters
@@ -9,7 +10,7 @@ const UpdateDisease = ({ url = "http://localhost:4000" }) => {
   const [diseaseData, setDiseaseData] = useState({
     diseaseName: "",
     category: "",
-    severityLevel: "",
+    severityLevel: 1, // Set initial severity level to 1
     image: null, // To store the selected image file
   });
 
@@ -20,6 +21,10 @@ const UpdateDisease = ({ url = "http://localhost:4000" }) => {
     } else {
       setDiseaseData({ ...diseaseData, [name]: value });
     }
+  };
+
+  const handleSliderChange = (e) => {
+    setDiseaseData({ ...diseaseData, severityLevel: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -88,17 +93,24 @@ const UpdateDisease = ({ url = "http://localhost:4000" }) => {
         <div>
           <label>Severity Level:</label>
           <input
-            type="number"
+            type="range"
             name="severityLevel"
+            min="1"
+            max="10"
             value={diseaseData.severityLevel}
-            onChange={handleChange}
-            required
+            onChange={handleSliderChange}
+            className="severity-slider"
           />
+          <p>Current Severity Level: {diseaseData.severityLevel}</p>
         </div>
         <div>
           <label>Image:</label>
           <input type="file" name="image" onChange={handleChange} />
-          {diseaseData.image && <p>Selected file: {diseaseData.image.name}</p>}
+          {diseaseData.image && (
+            <p className="image-preview">
+              Selected file: {diseaseData.image.name}
+            </p>
+          )}
         </div>
         <button type="submit">Update Disease</button>
       </form>
