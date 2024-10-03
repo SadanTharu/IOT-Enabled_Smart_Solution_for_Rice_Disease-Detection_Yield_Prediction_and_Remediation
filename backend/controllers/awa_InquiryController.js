@@ -11,12 +11,10 @@ const addDiseaseInquiry = async (req,res) => {
     let image_filename = req.file ? req.file.filename : null;
 
     const disease = new diseaseInquiryModel({
-        // farmerName: req.body.farmerName,
         farmerName: req.body.farmerName,
         email: req.body.email,
         phone: req.body.phone,
         inquiryDate: req.body.inquiryDate,
-        // inquaryTopic: req.body.inquaryTopic,
         inquiryTopic: req.body.inquiryTopic,
         symptoms: req.body.symptoms,
         area: req.body.area,
@@ -66,5 +64,41 @@ const removeDiseaseInquiry = async(req,res) =>{
 }
 
 
+// Update disease inquiry
+const updateDiseaseInquiry = async (req, res) => {
+    const { id } = req.params; // Get the id from request parameters
+    console.log(`Updating inquiry with ID: ${id}`); // Log the ID
 
-export {addDiseaseInquiry,listDiseaseInquiry,removeDiseaseInquiry};
+    try {
+        const image_filename = req.file ? req.file.filename : req.body.images;
+
+        const updatedData = {
+            farmerName: req.body.farmerName,
+            email: req.body.email,
+            phone: req.body.phone,
+            inquiryDate: req.body.inquiryDate,
+            inquiryTopic: req.body.inquiryTopic,
+            symptoms: req.body.symptoms,
+            area: req.body.area,
+            location: req.body.location,
+            priorityLevel: req.body.priorityLevel,
+            images: image_filename
+        };
+
+        const updatedInquiry = await diseaseInquiryModel.findByIdAndUpdate(id, updatedData, { new: true });
+        
+        // Check if the inquiry was found and updated
+        if (!updatedInquiry) {
+            return res.status(404).json({ message: 'Inquiry not found' });
+        }
+
+        res.json({ success: true, message: "Disease Inquiry updated", data: updatedInquiry });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: "Error updating inquiry" });
+    }
+};
+
+
+
+export {addDiseaseInquiry,listDiseaseInquiry,removeDiseaseInquiry,updateDiseaseInquiry};
