@@ -3,6 +3,7 @@ import "./deseaseList.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { assets } from "../../assets/assets";
 
 const DeseaseList = ({ url }) => {
   const [list, setList] = useState([]);
@@ -67,18 +68,20 @@ const DeseaseList = ({ url }) => {
               <p>{item.diseaseName}</p>
               <p>{item.category}</p>
               <p>{item.severityLevel}</p>
-              <button
+
+              <img
+                src={assets.update_icon}
+                alt="update"
                 className="update-button"
                 onClick={() => handleUpdate(item._id)}
-              >
-                Update
-              </button>
-              <p
-                onClick={() => removeDesease(item._id)}
+              />
+
+              <img
+                src={assets.delete_icon}
+                alt="Delete"
                 className="delete-icon"
-              >
-                X
-              </p>
+                onClick={() => removeDesease(item._id)}
+              />
             </div>
           ))
         ) : (

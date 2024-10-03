@@ -56,7 +56,7 @@ const UpdateDisease = ({ url = "http://localhost:4000" }) => {
 
       if (response.data.success) {
         toast.success("Disease updated successfully");
-        navigate("/"); // Navigate back to the list page after successful update
+        navigate("/list"); // Navigate back to the list page after successful update
       } else {
         toast.error("Failed to update disease");
       }

@@ -27,10 +27,10 @@
 }
 
 .update-button {
-    background-color: #ccc; /* Grey background */
-    color: black; /* Black text */
+    background-color: rgb(141, 136, 136); /* Grey background */
+    color: white; /* Black text */
     border: none; /* No border */
-    padding: 4px 10px; /* Some padding */
+    padding: 5px 15px; /* Some padding */
     text-align: center; /* Centered text */
     text-decoration: none; /* No underline */
     display: inline-block; /* Inline-block element */
@@ -49,4 +49,5 @@
     color: red; /* Optional: change color of the X icon */
     font-weight: bold; /* Optional: make it bold */
     text-align: center; /* Center the icon */
+    padding: 10px 10px;
 }

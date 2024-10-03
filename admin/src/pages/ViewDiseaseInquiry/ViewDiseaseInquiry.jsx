@@ -4,6 +4,19 @@ import "./ViewDiseaseInquiry.css";
 import jsPDF from "jspdf"; // Import jsPDF for PDF generation
 import "jspdf-autotable"; // Import jsPDF plugin for table formatting
 
+//disabled display image part
+/*
+   {inquiry.images ? (
+    <img
+      src={`${url}/images/${inquiry.images}`}
+      alt="Inquiry"
+      className="disease-in-inquiry-image"
+    />
+  ) : (
+    <p>No Image Available</p>
+  )}
+*/
+
 const ViewDiseaseInquiry = ({ url }) => {
   const [inquiries, setInquiries] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -77,15 +90,7 @@ const ViewDiseaseInquiry = ({ url }) => {
           filteredInquiries.map((inquiry) => (
             <div key={inquiry._id} className="disease-in-inquiry-card">
               {/* Display image if available */}
-              {inquiry.images ? (
-                <img
-                  src={`${url}/images/${inquiry.images}`}
-                  alt="Inquiry"
-                  className="disease-in-inquiry-image"
-                />
-              ) : (
-                <p>No Image Available</p>
-              )}
+
               <div className="disease-in-inquiry-details">
                 <h3>{inquiry.farmerName}</h3>
                 <p>

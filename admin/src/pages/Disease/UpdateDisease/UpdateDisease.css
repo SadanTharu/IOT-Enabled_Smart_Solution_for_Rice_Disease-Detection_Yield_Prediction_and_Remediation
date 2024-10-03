@@ -11,6 +11,9 @@
    flex-direction: column;
    gap: 20px;
 }
+.update-disease h2{
+   color: rgb(101, 100, 100);
+}
 
 .update-disease input[type="text"],
 .update-disease input[type="number"],
@@ -29,7 +32,7 @@
 .update-disease button {
    max-width: 120px;
    border: none;
-   background-color: black;
+   background-color: rgb(101, 100, 100);
    color: white;
    cursor: pointer;
    transition: background-color 0.3s;
