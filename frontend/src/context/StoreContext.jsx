@@ -6,6 +6,7 @@ export const StoreContext = createContext(null);
 const StoreContextProvider = (props) => {
   const url = "http://localhost:4000";
   const [disease_list, setDiseaseList] = useState([]);
+  const [token, setToken] = useState(null);
 
   const fetchDiseaseList = async () => {
     try {
@@ -23,6 +24,8 @@ const StoreContextProvider = (props) => {
   const contextValue = {
     disease_list,
     url,
+    token,
+    setToken,
   };
 
   return (

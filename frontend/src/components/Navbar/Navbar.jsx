@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 import { assets } from "../../assets/assets";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { StoreContext } from "../../context/StoreContext";
 
-const Navbar = () => {
+
+const Navbar = ({setShowLogin}) => {
   const [menu, setMenu] = useState("home");
+  const navigate = useNavigate();
+  const {token,setToken} = useContext(StoreContext);
+    
+    const logout = () => {
+      localStorage.removeItem("token");
+      setToken("");
+      navigate("/")
+    }
 
   return (
     <div className="navbar">
@@ -48,9 +59,24 @@ const Navbar = () => {
           Contact Us
         </a>
       </ul>
-      <div className="navbar-right">
-        <button>Sign In</button>
-      </div>
+      {!token?<button onClick={()=>setShowLogin(true)}>sign in</button>
+         :  <div className="navbar-profile">
+                <img src={assets.profile_icon} alt="" />
+                <ul className="navbar-profile-dropdown">
+                  <li onClick={()=>navigate('/profile')}>
+                      <img src={assets.profile} alt="" />
+                      <p>My Profile</p>
+                  </li>
+                
+                  
+                  <hr />
+                  <li onClick={logout}>
+                      <img src={assets.logout_icon} alt="" />
+                      <p>Logout</p>
+                  </li>
+                </ul>
+           </div> 
+          }
     </div>
   );
 };
