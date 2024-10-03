@@ -52,6 +52,31 @@ const removeDisease = async (req,res)=>{
     }
 }
 
+//update disease
+const updateDisease = async (req, res, next) => {
+    const id = req.params.id;  // Get the ID from the URL
+    const { diseaseName, category, severityLevel } = req.body;  // Destructure fields from the request body
+    let image = req.file ? `http://localhost:4000/uploads/${req.file.filename}` : req.body.image;  // Update the image if a new file is provided
+
+    try {
+        // Find the disease by ID and update the details
+        let update = await diseaseModel.findByIdAndUpdate(id, {
+            diseaseName: diseaseName,
+            category: category,
+            severityLevel: severityLevel,
+            image: image
+        }, { new: true });  // Return the updated document
+
+        // If successful, return the updated data
+        res.json({ success: true, data: update });
+    } catch (error) {
+        // Log the error and return a failure message
+        console.log(error);
+        res.json({ success: false, message: "Error updating disease" });
+    }
+};
 
 
-export {addDisease,diseaseList,removeDisease}
+
+
+export {addDisease,diseaseList,removeDisease,updateDisease}

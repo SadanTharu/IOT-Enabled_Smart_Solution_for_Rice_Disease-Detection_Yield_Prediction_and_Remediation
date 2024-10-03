@@ -2,6 +2,7 @@ import express from 'express';
 import { addDisease } from '../controllers/diseaseController.js';
 import { diseaseList } from '../controllers/diseaseController.js';
 import { removeDisease } from '../controllers/diseaseController.js';
+import{updateDisease} from '../controllers/diseaseController.js';
 
 import multer from 'multer';
 
@@ -20,6 +21,8 @@ const upload = multer({storage:storage})
 diseaseRouter.post("/add",upload.single("image"),addDisease)
 diseaseRouter.get("/list",diseaseList)
 diseaseRouter.post("/remove",removeDisease)
+diseaseRouter.put("/update/:id", upload.single("image"), updateDisease);  // Handle image upload and disease update
+
 
 
 
