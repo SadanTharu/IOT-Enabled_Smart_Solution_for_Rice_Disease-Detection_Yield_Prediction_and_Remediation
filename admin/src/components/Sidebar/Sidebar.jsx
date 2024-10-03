@@ -15,7 +15,6 @@ const Sidebar = () => {
           <img src={assets.disease_icon} alt="" />
           <p>Disease Management</p>
         </NavLink>
-        <NavLink to="/treat" className="sidebar-option"></NavLink>
         <NavLink to='/remedies' className="sidebar-option">
           <img src={assets.treat_icon} alt="" />
           <p>Remedy Management</p>
