@@ -4,7 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const Prediction = () => {
-  const url = 'http://localhost:5000'; // Adjusted URL to match Flask server
+  const url = 'http://localhost:5000';
 
   const [data, setData] = useState({
     Year: '',
