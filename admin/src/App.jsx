@@ -19,6 +19,8 @@ import AddNewRemedies from "./pages/Treat/AddNewRemedies";
 import RemedyList from "./pages/Treat/RemedyList";
 import RemedyDetail from "./pages/Treat/RemedyDetail";
 import EditRemedy from "./pages/Treat/EditRemedy";
+import ViewDiseaseInquiryfromAwa from "./pages/ViewDiseaseInquiry/ViewDiseaseInquiry";
+import ContctRemedyManagement from "./pages/ContctRemedyManagement/ContactRemedyManagement";
 
 const App = () => {
   const url = "http://localhost:4000";
@@ -36,6 +38,14 @@ const App = () => {
           <Route path="/disease" element={<Disease url={url} />} />
           <Route path="/adddesease" element={<AddDesease url={url} />} />
           <Route path="/list" element={<DeseaseList url={url} />} />
+          <Route
+            path="/deseaseinfo"
+            element={<ViewDiseaseInquiryfromAwa url={url} />}
+          />
+          <Route
+            path="/contactremedy"
+            element={<ContctRemedyManagement url={url} />}
+          />
 
           <Route path="/remedies" element={<Remedies url={url} />} />
           <Route
