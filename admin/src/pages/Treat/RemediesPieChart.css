@@ -1,0 +1,42 @@
+/* RemediesPieChart.css */
+
+.chart-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.chart-container {
+  width: 100%;  /* Full width of the parent */
+  max-width: 800px; /* Limit max-width for better fit */
+  height: 500px; /* Set a fixed height */
+  margin: 0 auto; /* Center the chart */
+  padding: 20px; /* Optional padding around the chart */
+}
+
+.custom-tooltip {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.tooltip-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.tooltip-disease-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.disease-item {
+  display: flex;
+  align-items: center;
+}
+
+.disease-icon {
+  margin-right: 5px;
+}

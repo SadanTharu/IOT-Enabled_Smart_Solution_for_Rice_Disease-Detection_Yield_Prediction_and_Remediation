@@ -1,6 +1,6 @@
 import express from 'express';
 import multer from 'multer'; // Import multer for handling file uploads
-import { addRemedy, getAllRemedies, getRemedyById, updateRemedy, deleteRemedy } from '../controllers/RemedyController.js'; 
+import { addRemedy, getAllRemedies, getRemedyById, updateRemedy, deleteRemedy} from '../controllers/RemedyController.js'; 
 
 const remediationRouter = express.Router();
 
@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Add a new remedy
-remediationRouter.post('/add', upload.single('image'), addRemedy); // Handle image upload
+remediationRouter.post('/add', upload.single('image'), addRemedy); 
 
 // Get all remedies
 remediationRouter.get('/list', getAllRemedies);
@@ -28,5 +28,8 @@ remediationRouter.put('/:id', upload.single('image'), updateRemedy);
 
 // DELETE /api/remediation/:id
 remediationRouter.delete('/:id', deleteRemedy);
+
+// // Route to generate PDF report
+// remediationRouter.get('/generate-report', generatePDFReport);
 
 export default remediationRouter;
