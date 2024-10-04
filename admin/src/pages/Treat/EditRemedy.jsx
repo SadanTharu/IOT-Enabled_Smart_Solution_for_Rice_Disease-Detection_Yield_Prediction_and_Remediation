@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './EditRemedy.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { IconButton, Box } from '@mui/material';
+import { IconButton, Box, Grid, TextField, Button } from '@mui/material';
 
 const EditRemedy = ({ url }) => {
     const { id } = useParams();
@@ -48,6 +48,7 @@ const EditRemedy = ({ url }) => {
         setImage(e.target.files[0]);
     };
 
+    //form data fields validations
     const validate = () => {
         const newErrors = {};
         if (!remediation.diseaseName) newErrors.diseaseName = 'Disease name is required.';
@@ -76,10 +77,10 @@ const EditRemedy = ({ url }) => {
         if (image) {
             formData.append('image', image);
         }
-    
+
         console.log('Updating remediation with ID:', id);
         console.log('FormData:', formData);
-    
+
         try {
             const response = await axios.put(`${url}/api/remediation/${id}`, formData, {
                 headers: {
@@ -120,73 +121,121 @@ const EditRemedy = ({ url }) => {
 
             <h2>Edit Remediation</h2>
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Disease Name:</label>
-                    <input
-                        type="text"
-                        name="diseaseName"
-                        value={remediation.diseaseName}
-                        onChange={handleChange}
-                    />
-                    {errors.diseaseName && <p className="error-text">{errors.diseaseName}</p>}
-                </div>
-                <div className="form-group">
-                    <label>Symptoms:</label>
-                    <textarea
-                        name="symptoms"
-                        value={remediation.symptoms}
-                        onChange={handleChange}
-                    />
-                    {errors.symptoms && <p className="error-text">{errors.symptoms}</p>}
-                </div>
-                <div className="form-group">
-                    <label>Remediation Steps:</label>
-                    <textarea
-                        name="steps"
-                        value={remediation.steps}
-                        onChange={handleChange}
-                    />
-                    {errors.steps && <p className="error-text">{errors.steps}</p>}
-                </div>
-                <div className="form-group">
-                    <label>Materials Needed:</label>
-                    <textarea
-                        name="materials"
-                        value={remediation.materials}
-                        onChange={handleChange}
-                    />
-                    {errors.materials && <p className="error-text">{errors.materials}</p>}
-                </div>
-                <div className="form-group">
-                    <label>YouTube Tutorial (URL):</label>
-                    <input
-                        type="text"  // Changed to text
-                        name="youtubeTutorial"
-                        value={remediation.youtubeTutorial}
-                        onChange={handleChange}
-                    />
-                    {errors.youtubeTutorial && <p className="error-text">{errors.youtubeTutorial}</p>}
-                </div>
-                <div className="form-group">
-                    <label>Notes/Warnings:</label>
-                    <textarea
-                        name="notes"
-                        value={remediation.notes}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Upload New Image (optional):</label>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                    />
-                </div>
-                <div className="button-group">
-                    <button type="submit" className="submit-button">Update Remediation</button>
-                    <button type="button" className="cancel-button" onClick={handleCancel}>Cancel</button>
-                </div>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Disease Name"
+                            name="diseaseName"
+                            value={remediation.diseaseName}
+                            onChange={handleChange}
+                            error={!!errors.diseaseName}
+                            helperText={errors.diseaseName}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Symptoms"
+                            name="symptoms"
+                            value={remediation.symptoms}
+                            onChange={handleChange}
+                            error={!!errors.symptoms}
+                            helperText={errors.symptoms}
+                            multiline
+                            rows={4}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Remediation Steps"
+                            name="steps"
+                            value={remediation.steps}
+                            onChange={handleChange}
+                            error={!!errors.steps}
+                            helperText={errors.steps}
+                            multiline
+                            rows={4}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Materials Needed"
+                            name="materials"
+                            value={remediation.materials}
+                            onChange={handleChange}
+                            error={!!errors.materials}
+                            helperText={errors.materials}
+                            multiline
+                            rows={4}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="YouTube Tutorial (URL)"
+                            name="youtubeTutorial"
+                            value={remediation.youtubeTutorial}
+                            onChange={handleChange}
+                            error={!!errors.youtubeTutorial}
+                            helperText={errors.youtubeTutorial}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Notes/Warnings"
+                            name="notes"
+                            value={remediation.notes}
+                            onChange={handleChange}
+                            multiline
+                            rows={4}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <div className="button-group">
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    backgroundColor: '#28a745',
+                                    '&:hover': {
+                                        backgroundColor: '#218838',
+                                    },
+                                }}
+                                type="submit"
+                                className="submit-button"
+                            >
+                                Update Remediation
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                sx={{
+                                    backgroundColor: '#6c757d',
+                                    color: 'white', 
+                                    '&:hover': {
+                                        backgroundColor: '#5a6268', 
+                                        color: 'white', 
+                                    },
+                                }}
+                                type="button"
+                                className="cancel-button"
+                                onClick={handleCancel}
+                            >
+                                Cancel
+                            </Button>
+
+                        </div>
+                    </Grid>
+                </Grid>
             </form>
             <ToastContainer />
         </div>

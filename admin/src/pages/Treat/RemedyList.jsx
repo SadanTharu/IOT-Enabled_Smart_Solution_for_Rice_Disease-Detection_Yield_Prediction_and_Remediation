@@ -14,7 +14,7 @@ const RemedyList = ({ url }) => {
 
     const fetchRemedies = async () => {
         try {
-            const response = await axios.get(`${url}/api/remediation`);
+            const response = await axios.get(`${url}/api/remediation/list`);
             setRemedies(response.data);
             localStorage.setItem('remedies', JSON.stringify(response.data));
         } catch (error) {

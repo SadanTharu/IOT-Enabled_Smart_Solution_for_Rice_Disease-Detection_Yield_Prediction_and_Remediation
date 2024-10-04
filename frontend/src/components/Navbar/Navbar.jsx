@@ -44,13 +44,7 @@ const Navbar = ({setShowLogin}) => {
         >
           Diseases
         </a>
-        <a
-          href="#remedies"
-          onClick={() => setMenu("remedies")}
-          className={menu === "remedies" ? "active" : ""}
-        >
-          Remedies
-        </a>
+        <Link to="/Remedies" onClick={() => setMenu("remedies")} className={menu === "remedies" ? "active" : ""} >Remedies</Link>
         <a
           href="#contact-us"
           onClick={() => setMenu("contact-us")}
