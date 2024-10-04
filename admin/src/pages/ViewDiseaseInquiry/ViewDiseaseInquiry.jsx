@@ -109,13 +109,13 @@ const ViewDiseaseInquiry = ({ url }) => {
                 <p>
                   <strong>Inquiry Topic:</strong> {inquiry.inquiryTopic}
                 </p>
-                <p>
+                <p className="symptoms">
                   <strong>Symptoms:</strong> {inquiry.symptoms}
                 </p>
                 <p>
                   <strong>Area:</strong> {inquiry.area}
                 </p>
-                <p>
+                <p className="priority-level">
                   <strong>Priority Level:</strong> {inquiry.priorityLevel}
                 </p>
               </div>
