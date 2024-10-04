@@ -23,7 +23,7 @@
   padding: 12px 20px; /* Increased padding for better touch target */
   border: none;
   border-radius: 4px;
-  background-color: grey; /* Button color */
+  background-color: rgb(30, 131, 30); /* Updated button color */
   color: white;
   font-size: 16px; /* Increased font size for readability */
   cursor: pointer;
@@ -45,11 +45,12 @@
 }
 
 .disease-in-inquiry-card {
-  border: 1px solid #ddd; /* Card border */
+  border: 1px solid #ddd; /* Existing card border */
   border-radius: 8px; /* Rounded corners */
   padding: 15px;
-  background-color: #f9f9f9; /* Card background color */
+  background-color: #e8f5e9; /* Very light green background */
   transition: box-shadow 0.3s ease; /* Smooth shadow transition */
+  border: 2px solid grey; /* New light green border */
 }
 
 .disease-in-inquiry-card:hover {
