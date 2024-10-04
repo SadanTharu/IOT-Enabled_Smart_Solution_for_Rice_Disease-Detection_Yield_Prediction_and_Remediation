@@ -12,6 +12,7 @@ import AddNewRemedies from './pages/Treat/AddNewRemedies'
 
 import User from './pages/User/User'
 import Prediction from './pages/Prediction/Prediction'
+import ViewInquiries from './pages/Inquiry/Inquiry'
 
 const App = () => {
 
@@ -34,6 +35,10 @@ const App = () => {
           <Route path="/user" element={<User/>}/>
 
           <Route path="/prediction" element={<Prediction/>}/>
+
+          <Route path="/viewInquiry" element={<ViewInquiries/>}/>
+
+
 
         </Routes>
       </div>
