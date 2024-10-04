@@ -23,6 +23,7 @@ const __dirname = path.dirname(__filename);
 
 // Serve static files from the 'uploads' directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use("/images", express.static('uploads'));
 
 //middleware
 app.use(express.json())
@@ -35,15 +36,18 @@ connectDB();
 //matheesha
 app.use("/api/disease",diseaseRouter)
 app.use("/images",express.static('uploads'))
-
 app.use("/api/contactRemedy",diseaseRouterforRemedy)
 app.use("/api/diseaseInquiry", awa_diseaseRoute);
+
 //sadan
 app.use("/api/prediction",predictionRouter)
 app.use('/api/user', userRouter)
 
 //Thushan
 app.use('/api/remediation', remediationRouter);
+
+//Awandya
+app.use("/api/diseaseInquiry", diseaseRouter);
 
 app.get("/",(req,res)=>{
     res.send("API working")
