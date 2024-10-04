@@ -17,6 +17,7 @@ import EditRemedy from './pages/Treat/EditRemedy';
 import RemedyReport from './pages/Treat/RemedyReport';
 import ContctRemedyManagement from "./pages/ContctRemedyManagement/ContactRemedyManagement";
 import ViewDiseaseInquiry from "./pages/ViewDiseaseInquiry/ViewDiseaseInquiry";
+import UpdateDisease from './pages/Disease/UpdateDisease/UpdateDisease'
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
@@ -42,14 +43,9 @@ const App = () => {
           <Route path="/RemedyReport" element={<RemedyReport url={url} />} />
           <Route path="/Inquiries" element={<Inquiries />} />
           <Route path="/prediction" element={<Prediction />} />
-          <Route
-            path="/deseaseinfo"
-            element={<ViewDiseaseInquiry url={url} />}
-          />
-          <Route
-            path="/contactremedy"
-            element={<ContctRemedyManagement url={url} />}
-          />
+          <Route path="/deseaseinfo" element={<ViewDiseaseInquiry url={url} />} />
+          <Route path="/contactremedy" element={<ContctRemedyManagement url={url} />} />
+          <Route path="/update/:id" element={<UpdateDisease url={url} />} />
         </Routes>
       </div>
     </div>
