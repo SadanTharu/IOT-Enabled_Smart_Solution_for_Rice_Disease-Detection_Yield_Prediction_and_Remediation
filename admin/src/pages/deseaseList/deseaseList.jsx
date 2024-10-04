@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./deseaseList.css";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { assets } from "../../assets/assets";
 
 const DeseaseList = ({ url }) => {
   const [list, setList] = useState([]);
+  const navigate = useNavigate(); // For navigation
 
   const fetchList = async () => {
     try {
@@ -26,15 +29,20 @@ const DeseaseList = ({ url }) => {
         id: DeseaseId,
       });
       if (response.data.success) {
-        toast.success("desease item deleted successfully");
+        toast.success("Disease item deleted successfully");
         fetchList(); // Fetch the list again after a successful delete
       } else {
-        toast.error("Error deleting Desease item");
+        toast.error("Error deleting Disease item");
       }
     } catch (error) {
       toast.error("Network error");
-      console.error("Error deleting Desease item:", error);
+      console.error("Error deleting Disease item:", error);
     }
+  };
+
+  // Navigate to the update page
+  const handleUpdate = (diseaseId) => {
+    navigate(`/update/${diseaseId}`); // Navigate to the update page with the disease ID
   };
 
   useEffect(() => {
@@ -43,14 +51,15 @@ const DeseaseList = ({ url }) => {
 
   return (
     <div className="list add flex-col">
-      <p>All Desease Data</p>
+      <p>All Disease Data</p>
       <div className="list-table">
-        <div className="list-table-format">
+        <div className="list-table-format title">
           <b>Image</b>
-          <b>diseaseName</b>
+          <b>Disease Name</b>
           <b>Category</b>
-          <b>severityLevel</b>
-          <b>Action</b>
+          <b>Severity Level</b>
+          <b>Update</b> {/* Header for Update button */}
+          <b>Delete</b> {/* Header for Delete button */}
         </div>
         {list.length > 0 ? (
           list.map((item, index) => (
@@ -59,13 +68,24 @@ const DeseaseList = ({ url }) => {
               <p>{item.diseaseName}</p>
               <p>{item.category}</p>
               <p>{item.severityLevel}</p>
-              <p onClick={() => removeDesease(item._id)} className="cursor">
-                X
-              </p>
+
+              <img
+                src={assets.update_icon}
+                alt="update"
+                className="update-button"
+                onClick={() => handleUpdate(item._id)}
+              />
+
+              <img
+                src={assets.delete_icon}
+                alt="Delete"
+                className="delete-icon"
+                onClick={() => removeDesease(item._id)}
+              />
             </div>
           ))
         ) : (
-          <p>No desease data available.</p>
+          <p>No disease data available.</p>
         )}
       </div>
     </div>
