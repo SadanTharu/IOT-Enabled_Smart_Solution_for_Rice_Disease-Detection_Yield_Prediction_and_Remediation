@@ -1,54 +1,13 @@
-import { error } from "console";
-import predictionModel from "../models/predictionModel.js";
+import axios from 'axios';
 
-//add prediction data
-const addPrediction = async (req,res)=>{
+const FLASK_API_URL = 'http://localhost:5000/predict'; // Update with your Flask URL if different
 
-    const prediction = new predictionModel({
-        cropType: req.body.cropType,
-        location: req.body.location,
-        fieldSize: req.body.fieldSize,
-        plantingDate: req.body.plantingDate,
-        disease: req.body.disease,
-        diseaseSpreadSize: req.body.diseaseSpreadSize,
-
-    })
-    try{
-        await prediction.save();
-        res.json({success:true,message:"Prediction Data Added"})
-    }
-    catch(error){
-        console.log(error);
-        res.json({success:false,message:"Error"})
-    }
-}
-
-//All prediction data lists
-const predictionList = async (req,res)=>{
-    try{
-        const prediction = await predictionModel.find({});
-        res.json({success:true,data:prediction})
-    }
-    catch(error){
-        console.log(error);
-        res.json({success:false,message:"Error"})
-    }
-}
-
-//remove prediction data 
-const removePrediction = async (req,res)=>{
-    try{
-        const prediction = await predictionModel.findById(req.body.id);
-        await predictionModel.findByIdAndDelete(req.body.id);
-
-        res.json({success:true,message:"Prediction Removed"})
-    }
-    catch(error){
-        console.log(error);
-        res.json({success:false,message:"Error"})
-    }
-}
-
-
-
-export {addPrediction , predictionList , removePrediction}
+export const predictCropYield = async (req, res) => {
+  try {
+    const response = await axios.post(FLASK_API_URL, req.body);
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error predicting crop yield:', error);
+    res.status(500).json({ error: 'Prediction failed' });
+  }
+};

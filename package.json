@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start": "concurrently \"npm run start:admin\" \"npm run start:frontend\" \"npm run start:backend\"",
+    "start:admin": "cd admin && npm run dev",
+    "start:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && npm run server"
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  }
+}

@@ -4,10 +4,14 @@ import { connectDB } from "./config/db.js"
 
 import path from 'path';
 import { fileURLToPath } from 'url';
+import 'dotenv/config'
 
 import diseaseRouter from './routes/diseaseRouter.js';
 import predictionRouter from './routes/predictionRouter.js';
+import diseaseRouterforRemedy from "./routes/contactRemedyRouter.js";
+import awa_diseaseRoute from "./routes/awa_diseaseRoute.js"
 import remediationRouter from './routes/T_remediationRoute.js'
+import userRouter from './routes/userRoute.js'
 
 //app configations
 const app = express()
@@ -32,8 +36,11 @@ connectDB();
 app.use("/api/disease",diseaseRouter)
 app.use("/images",express.static('uploads'))
 
+app.use("/api/contactRemedy",diseaseRouterforRemedy)
+app.use("/api/diseaseInquiry", awa_diseaseRoute);
 //sadan
 app.use("/api/prediction",predictionRouter)
+app.use('/api/user', userRouter)
 
 //Thushan
 app.use('/api/remediation', remediationRouter);
