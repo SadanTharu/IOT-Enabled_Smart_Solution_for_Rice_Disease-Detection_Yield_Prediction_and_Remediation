@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import './RemedyList.css';
 
-const RemedyList = ({ url }) => {
+const RemedyList = ({ url, setExistingDiseaseNames }) => {
     const [remedies, setRemedies] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);
@@ -17,6 +17,10 @@ const RemedyList = ({ url }) => {
             const response = await axios.get(`${url}/api/remediation/list`);
             setRemedies(response.data);
             localStorage.setItem('remedies', JSON.stringify(response.data));
+
+            // Extract disease names and pass them to the parent component
+            const diseaseNames = response.data.map(remedy => remedy.diseaseName);
+            setExistingDiseaseNames(diseaseNames);  // Pass existing disease names up
         } catch (error) {
             console.error('Error fetching remedies:', error);
             toast.error('Error fetching remedies: ' + error.message);
@@ -52,93 +56,104 @@ const RemedyList = ({ url }) => {
         navigate('/AddNewRemedies'); 
     };
 
+    // Filter remedies based on search term
     const filteredRemedies = remedies.filter(remedy =>
         remedy.diseaseName.toLowerCase().includes(searchTerm)
     );
 
     return (
         <Box className="remedy-list-container">
-    <Box className="header-container">
-        <Typography variant="h4">Remedy Collection</Typography>
-        <IconButton
-            color="primary"
-            aria-label="add remedy"
-            onClick={handleAddRemedy}
-            className="add-remedy-button"
-        >
-            <AddCircleIcon fontSize="large" />
-        </IconButton>
-    </Box>
-    <Box className="search-bar-container">
-        <TextField
-            label="Search by Disease Name"
-            variant="outlined"
-            margin="normal"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            className="search-bar"
-        />
-    </Box>
-    {loading ? (
-        <Box className="loading-container">
-            <CircularProgress className="loading-spinner" />
-        </Box>
-    ) : (
-        <Box className="remedy-list">
-            {filteredRemedies.length ? (
-                filteredRemedies.map(remedy => (
-                    <Box
-                        key={remedy._id}
-                        className="remedy-list-item"
-                        onClick={() => handleRemedyClick(remedy._id)}
-                    >
-                        <Box className="remedy-list-image-container">
-                            {remedy.image ? (
-                                <img
-                                    src={remedy.image}
-                                    alt={remedy.diseaseName}
-                                    className="remedy-list-image"
-                                />
-                            ) : (
-                                <Box className="remedy-list-no-image">
-                                    No image available
-                                </Box>
-                            )}
-                        </Box>
-                        <Box className="remedy-list-info">
-                            <Typography
-                                variant="h6"
-                                className="remedy-list-title"
-                            >
-                                {remedy.diseaseName}
-                            </Typography>
-                            <Typography
-                                variant="body2"
-                                className="remedy-list-text"
-                            >
-                                {remedy.symptoms.slice(0, 100)}...
-                            </Typography>
-                        </Box>
-                        <Box className="remedy-list-action">
-                            <Button
-                                size="small"
-                                className="remedy-list-button"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleRemedyClick(remedy._id);
-                                }}
-                            >
-                                Learn More
-                            </Button>
-                        </Box>
-                    </Box>
-                ))
+            <Box className="header-container">
+                <Typography variant="h4">Remedy Collection</Typography>
+                <IconButton
+                    color="primary"
+                    aria-label="add remedy"
+                    onClick={handleAddRemedy}
+                    className="add-remedy-button"
+                >
+                    <AddCircleIcon fontSize="large" />
+                </IconButton>
+            </Box>
+            <Box className="search-bar-container">
+                <TextField
+                    label="Search by Disease Name"
+                    variant="outlined"
+                    margin="normal"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    className="search-bar"
+                />
+            </Box>
+            {loading ? (
+                <Box className="loading-container">
+                    <CircularProgress className="loading-spinner" />
+                </Box>
             ) : (
-                <Typography>No remedies found.</Typography>
+                <Box className="remedy-list">
+                    {filteredRemedies.length ? (
+                        filteredRemedies.map(remedy => (
+                            <Box
+                                key={remedy._id}
+                                className="remedy-list-item"
+                                onClick={() => handleRemedyClick(remedy._id)}
+                            >
+                                <Box className="remedy-list-image-container">
+                                    {remedy.image ? (
+                                        <img
+                                            src={remedy.image}
+                                            alt={remedy.diseaseName}
+                                            className="remedy-list-image"
+                                        />
+                                    ) : (
+                                        <Box className="remedy-list-no-image">
+                                            No image available
+                                        </Box>
+                                    )}
+                                </Box>
+                                <Box className="remedy-list-info">
+                                    <Typography
+                                        variant="h6"
+                                        className="remedy-list-title"
+                                    >
+                                        {remedy.diseaseName}
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        className="remedy-list-text"
+                                    >
+                                        {remedy.symptoms.slice(0, 100)}...
+                                    </Typography>
+                                </Box>
+                                <Box className="remedy-list-action">
+                                    <Button
+                                        size="small"
+                                        className="remedy-list-button"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleRemedyClick(remedy._id);
+                                        }}
+                                    >
+                                        Learn More
+                                    </Button>
+                                    <Button
+                                        size="small"
+                                        className="remedy-list-button"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleDeleteRemedy(remedy._id);
+                                        }}
+                                    >
+                                        Delete
+                                    </Button>
+                                </Box>
+                            </Box>
+                        ))
+                    ) : (
+                        <Typography>No remedies found.</Typography>
+                    )}
+                </Box>
             )}
         </Box>
-    )}
-</Box>
     );
 };
 

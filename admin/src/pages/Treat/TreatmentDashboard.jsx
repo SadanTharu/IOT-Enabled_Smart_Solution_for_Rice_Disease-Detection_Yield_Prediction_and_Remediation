@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './TreatmentDashboard.css'; // Import the CSS file
-import axios from 'axios'; // Import Axios for API calls
-import moment from 'moment'; // Import moment.js for date handling
-import RemediesPieChart from './RemediesPieChart'; // Import the new component
+import './TreatmentDashboard.css'; 
+import axios from 'axios';
+import RemediesPieChart from './RemediesPieChart';
+import moment from 'moment';
 
 const TreatmentDashboard = ({ url }) => {
   const [remedies, setRemedies] = useState([]);
@@ -11,55 +11,72 @@ const TreatmentDashboard = ({ url }) => {
   const [newRemediesAdded, setNewRemediesAdded] = useState(0);
   const [updatedRemediesCount, setUpdatedRemediesCount] = useState(0);
   const [dailyRemedies, setDailyRemedies] = useState([]);
+  const [diseasesWithoutRemedies, setDiseasesWithoutRemedies] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
-    const fetchRemedies = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`${url}/api/remediation/list`); // Adjust the URL as needed
-        const allRemedies = response.data;
+        // Fetching both remedies and diseases
+        const [remedyResponse, diseaseResponse] = await Promise.all([
+          axios.get(`${url}/api/remediation/list`),
+          axios.get(`${url}/api/disease/diseaseListWithoutRemedies`),
+        ]);
 
-        // Filter remedies updated in the last week
+        // Handling remedies data
+        const allRemedies = remedyResponse.data;
         const lastWeekRemedies = allRemedies.filter((remedy) =>
           moment(remedy.updatedAt).isAfter(moment().subtract(7, 'days'))
         );
 
-        setRemedies(lastWeekRemedies); // Set filtered remedies
-        setRemedyCount(lastWeekRemedies.length); // Total remedy count
-
-        // Set the count for new remedies added in the last week
+        setRemedies(lastWeekRemedies);
+        setRemedyCount(lastWeekRemedies.length);
         setNewRemediesAdded(lastWeekRemedies.length);
 
-        // Group remedies by day of the week
         const groupedByDay = {};
         lastWeekRemedies.forEach((remedy) => {
-          const remedyDate = moment(remedy.updatedAt).format('dddd'); // Get the day of the week
-
+          const remedyDate = moment(remedy.updatedAt).format('dddd');
           if (!groupedByDay[remedyDate]) {
-            groupedByDay[remedyDate] = {
-              count: 0,
-              diseases: []
-            };
+            groupedByDay[remedyDate] = { count: 0, diseases: [] };
           }
-          groupedByDay[remedyDate].count += 1; // Increment the count for this day
-          groupedByDay[remedyDate].diseases.push(remedy.diseaseName); // Add disease name to the array
+          groupedByDay[remedyDate].count += 1;
+          groupedByDay[remedyDate].diseases.push(remedy.diseaseName);
         });
 
-        // Prepare the data to be displayed on the chart
         const dailyData = Object.keys(groupedByDay).map((day) => ({
           name: day,
           value: groupedByDay[day].count,
-          diseases: groupedByDay[day].diseases // Pass the array of disease names directly
+          diseases: groupedByDay[day].diseases,
         }));
 
         setDailyRemedies(dailyData);
-        setUpdatedRemediesCount(lastWeekRemedies.length); // Set updated remedies count
+        setUpdatedRemediesCount(lastWeekRemedies.length);
+
+        // Handling diseases data
+        setDiseasesWithoutRemedies(diseaseResponse.data.data);
       } catch (error) {
-        console.error('Error fetching remedies:', error);
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false); // Stop loading when fetching is complete
       }
     };
 
-    fetchRemedies();
+    fetchData();
   }, [url]);
+
+  const handleAddRemedy = async (diseaseId) => {
+    try {
+      // Assuming you have an API to add a remedy, call it here
+      // Replace with actual logic to add remedy
+      await axios.post(`${url}/api/remediation/add`, { diseaseId });
+
+      // After successfully adding a remedy, fetch diseases again to update the list
+      const response = await axios.get(`${url}/api/disease/diseaseListWithoutRemedies`);
+      setDiseasesWithoutRemedies(response.data.data); // Update the state with the new list
+    } catch (error) {
+      console.error('Error adding remedy:', error);
+    }
+  };
 
   return (
     <div className="dashboard-container">
@@ -67,7 +84,6 @@ const TreatmentDashboard = ({ url }) => {
         <div className="dashboard-content">
           <h1 className="dashboard-title">CROPSHIELD. <br />ADMIN - REMEDIATION MANAGEMENT</h1>
 
-          {/* Summary Cards */}
           <div className="summary-cards">
             <div className="summary-card">
               <h2>Total Remedies</h2>
@@ -82,22 +98,39 @@ const TreatmentDashboard = ({ url }) => {
               <p>{updatedRemediesCount}</p>
             </div>
           </div>
-          <br />
 
-          {/* Navigation Links */}
           <div className="dashboard-links">
-            <Link to="/AddNewRemedies" className="dashboard-link">
-              Add New Remedy
-            </Link>
-            <Link to="/RemedyList" className="dashboard-link">
-              Remedy Collection
-            </Link>
-            <Link to="/RemedyReport" className="dashboard-link">
-              View Remedy Report
-            </Link>
+            <Link to="/AddNewRemedies" className="dashboard-link">Add New Remedy</Link>
+            <Link to="/RemedyList" className="dashboard-link">Remedy Collection</Link>
+            <Link to="/RemedyReport" className="dashboard-link">View Remedy Report</Link>
           </div>
-<br />
-          {/* Use the new Pie Chart Component */}
+
+          {/* Enhanced Diseases Without Remedies Section */}
+          <div className="diseases-container">
+            <h2>Diseases Without Remedies</h2>
+            <div className="disease-card">
+              {loading ? ( // Show loading state
+                <p>Loading diseases...</p>
+              ) : diseasesWithoutRemedies.length === 0 ? (
+                <p>No newly added diseases without remedies.</p>
+              ) : (
+                <ul>
+                  {diseasesWithoutRemedies.map((disease) => (
+                    <li key={disease._id}>
+                      {disease.diseaseName}
+                      <button 
+                        onClick={() => handleAddRemedy(disease._id)} 
+                        className="add-remedy-button"
+                      >
+                        Add Remedy
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+
           <RemediesPieChart dailyRemedies={dailyRemedies} />
         </div>
       </div>

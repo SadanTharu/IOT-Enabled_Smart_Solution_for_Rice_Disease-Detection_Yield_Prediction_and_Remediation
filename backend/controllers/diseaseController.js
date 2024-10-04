@@ -13,6 +13,7 @@ const addDisease = async (req,res)=>{
         severityLevel: req.body.severityLevel,
         category: req.body.category,
         image: image_filename,
+        hasRemedy: false,
 
     })
     try{
@@ -52,6 +53,16 @@ const removeDisease = async (req,res)=>{
     }
 }
 
+// Fetch diseases without remedies
+const diseaseListWithoutRemedies = async (req, res) => {
+    try {
+        const diseases = await diseaseModel.find({ hasRemedy: false });
+        res.json({ success: true, data: diseases });
+    } catch (error) {
+        console.error(error);
+        res.json({ success: false, message: "Error fetching diseases" });
+    }
+};
 
 
-export {addDisease,diseaseList,removeDisease}
+export {addDisease,diseaseList,removeDisease, diseaseListWithoutRemedies }
