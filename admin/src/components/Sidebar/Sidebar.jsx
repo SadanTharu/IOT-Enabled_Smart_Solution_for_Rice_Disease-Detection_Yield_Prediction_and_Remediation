@@ -23,10 +23,6 @@ const Sidebar = () => {
           <img src={assets.user_icon} alt="" />
           <p>Inquiry Management</p>
         </NavLink>
-        <NavLink to="/prediction" className="sidebar-option">
-          <img src={assets.prediction_icon} alt="" />
-          <p>Prediction Management</p>
-        </NavLink>
       </div>
     </div>
   );
