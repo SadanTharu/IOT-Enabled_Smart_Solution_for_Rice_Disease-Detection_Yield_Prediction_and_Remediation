@@ -1,9 +1,9 @@
 .remedy-list-container {
     padding: 20px;
     background-color: #ffffff;
-    /* max-width: 1200px; */
-    margin-top:100px ;
-    margin-left: 70px;
+    max-width: 1200px;
+    margin-top:30px ;
+    margin-left: 40px;
     margin-bottom: 50px;
     width: 90vw;
 }
@@ -19,11 +19,11 @@
 
 .search-bar-container {
     margin-bottom: 20px;
-    margin-left: 30px;
+    margin-left: 100px;
 }
 
 .search-bar {
-    max-width: 300px;
+    max-width: 500px;
    
 }
 
@@ -99,4 +99,20 @@
 .remedy-card-button:hover {
     color: rgb(55, 106, 246);
 }
+.remedy-card-dates {
+    margin-top: 8px; /* Adds space between text and date */
+    display: flex;
+    flex-direction: column;
+}
 
+.remedy-card-date {
+    color: green; /* Change text color to green */
+    font-weight: bold; /* Make the text bold */
+}
+
+@media screen and (max-width: 600px) {
+    .search-and-filter-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

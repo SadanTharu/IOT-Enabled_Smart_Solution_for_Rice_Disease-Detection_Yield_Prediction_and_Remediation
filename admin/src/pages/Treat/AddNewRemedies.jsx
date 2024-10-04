@@ -25,6 +25,7 @@ const AddNewRemedies = () => {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
+        //Image Type, size validation
         if (file) {
             if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.type)) {
                 setErrors((prevErrors) => ({
@@ -48,6 +49,7 @@ const AddNewRemedies = () => {
         }
     };
 
+    //Form Data field Validations
     const validate = () => {
         const newErrors = {};
         if (!remediation.diseaseName) newErrors.diseaseName = 'Disease name is required.';
@@ -79,7 +81,7 @@ const AddNewRemedies = () => {
 
         try {
             console.log('Submitting data:', remediation);
-            const response = await axios.post('http://localhost:4000/api/remediation', formData, {
+            const response = await axios.post('http://localhost:4000/api/remediation/add', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -118,64 +120,78 @@ const AddNewRemedies = () => {
             <h2>Add New Remediation</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>Disease Name:</label>
+                    <label htmlFor="diseaseName">Disease Name:</label>
                     <input
                         type="text"
                         name="diseaseName"
+                        id="diseaseName" 
                         value={remediation.diseaseName}
                         onChange={handleChange}
+                        placeholder="Enter disease name" 
                     />
                     {errors.diseaseName && <p className="error-text">{errors.diseaseName}</p>}
                 </div>
                 <div className="form-group">
-                    <label>Symptoms:</label>
+                    <label htmlFor="symptoms">Symptoms:</label>
                     <textarea
                         name="symptoms"
+                        id="symptoms" 
                         value={remediation.symptoms}
                         onChange={handleChange}
+                        placeholder="Enter symptoms here..." 
                     />
                     {errors.symptoms && <p className="error-text">{errors.symptoms}</p>}
                 </div>
                 <div className="form-group">
-                    <label>Remediation Steps:</label>
+                    <label htmlFor="steps">Remediation Steps:</label>
                     <textarea
                         name="steps"
+                        id="steps" 
                         value={remediation.steps}
                         onChange={handleChange}
+                        placeholder="Outline the remediation steps..."
                     />
                     {errors.steps && <p className="error-text">{errors.steps}</p>}
                 </div>
                 <div className="form-group">
-                    <label>Materials Needed:</label>
+                    <label htmlFor="materials">Materials Needed:</label>
                     <textarea
                         name="materials"
+                        id="materials" 
                         value={remediation.materials}
                         onChange={handleChange}
+                        placeholder="List materials needed..."
                     />
                     {errors.materials && <p className="error-text">{errors.materials}</p>}
                 </div>
                 <div className="form-group">
-                    <label>YouTube Tutorial (URL):</label>
+                    <label htmlFor="youtubeTutorial">YouTube Tutorial (URL):</label>
                     <input
-                        type="text"  // Change to text
+                        type="text"
                         name="youtubeTutorial"
+                        id="youtubeTutorial" 
                         value={remediation.youtubeTutorial}
                         onChange={handleChange}
+                        placeholder="Enter a valid URL..."
                     />
                     {errors.youtubeTutorial && <p className="error-text">{errors.youtubeTutorial}</p>}
                 </div>
                 <div className="form-group">
-                    <label>Notes/Warnings:</label>
+                    <label htmlFor="notes">Notes/Warnings:</label>
                     <textarea
                         name="notes"
+                        id="notes" 
                         value={remediation.notes}
                         onChange={handleChange}
+                        placeholder="Any additional notes..." 
                     />
                 </div>
                 <div className="form-group">
-                    <label>Upload Image:</label>
+                    <label htmlFor="image">Upload Image:</label>
                     <input
                         type="file"
+                        name="image"
+                        id="image" 
                         accept="image/*"
                         onChange={handleImageChange}
                     />

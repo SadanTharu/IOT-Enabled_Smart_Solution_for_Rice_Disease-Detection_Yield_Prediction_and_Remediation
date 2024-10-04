@@ -58,7 +58,7 @@ const RemedyDetailView = () => {
 
     return (
         <Box className="remedy-detail-container" style={{ position: 'relative' }}>
-            <Box position="absolute" top={0} right={15}>
+            <Box position="absolute" top={-112} right={-100}>
                 <IconButton aria-label="back" color="default" onClick={() => navigate(-1)}>
                     <ArrowBackIcon />
                 </IconButton>

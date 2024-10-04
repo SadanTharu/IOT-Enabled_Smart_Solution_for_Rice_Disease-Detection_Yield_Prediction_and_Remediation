@@ -1,21 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, CardActions, CardContent, CardMedia, Button, Typography, Box, TextField, CircularProgress, IconButton } from '@mui/material';
+import {
+    Card,
+    CardActions,
+    CardContent,
+    CardMedia,
+    Button,
+    Typography,
+    Box,
+    TextField,
+    IconButton,
+    MenuItem,
+    Select,
+    InputLabel,
+    FormControl,
+    Grid,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ClearIcon from '@mui/icons-material/Clear';
 import Skeleton from '@mui/material/Skeleton';
-import Rating from '@mui/material/Rating'; 
 import './RemedyListView.css';
 
 const RemedyListView = () => {
-    
-    const url = "http://localhost:4000"
-
+    const url = "http://localhost:4000";
     const [remedies, setRemedies] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [sortOption, setSortOption] = useState('createdDate');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -23,9 +36,7 @@ const RemedyListView = () => {
             try {
                 const response = await axios.get(`${url}/api/remediation/list`);
                 setRemedies(response.data);
-                localStorage.setItem('remedies', JSON.stringify(response.data));
             } catch (error) {
-                console.error('Error fetching remedies:', error);
                 setError('Failed to load remedies.');
                 toast.error('Error fetching remedies: ' + error.message);
             } finally {
@@ -33,10 +44,14 @@ const RemedyListView = () => {
             }
         };
         fetchRemedies();
-
-        // Scroll to the top of the page when the component is mounted
         window.scrollTo(0, 0);
     }, [url]);
+
+    const formatDate = (dateString) => {
+        if (!dateString) return 'No Date';
+        const date = new Date(dateString);
+        return date.toLocaleDateString();
+    };
 
     const handleCardClick = (id) => {
         navigate(`/remedy-detail-view/${id}`);
@@ -50,7 +65,25 @@ const RemedyListView = () => {
         setSearchTerm('');
     };
 
-    const filteredRemedies = remedies.filter(remedy =>
+    const handleSortChange = (event) => {
+        setSortOption(event.target.value);
+    };
+
+    const sortRemedies = (remedies) => {
+        const sortedRemedies = [...remedies]; // Create a copy of the remedies array
+        switch (sortOption) {
+            case 'alphabetical':
+                return sortedRemedies.sort((a, b) => a.diseaseName.localeCompare(b.diseaseName));
+            case 'createdDate':
+                return sortedRemedies.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            case 'updatedDate':
+                return sortedRemedies.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+            default:
+                return sortedRemedies;
+        }
+    };
+
+    const filteredRemedies = sortRemedies(remedies).filter((remedy) =>
         remedy.diseaseName.toLowerCase().includes(searchTerm)
     );
 
@@ -59,24 +92,40 @@ const RemedyListView = () => {
             <Typography variant="h4" className="remedy-list-title">
                 Explore Our Remedy Collection
             </Typography>
-            <Box className="search-bar-container" marginY={2}>
-                <TextField
-                    label="Search by Disease Name"
-                    variant="outlined"
-                    margin="normal"
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    className="search-bar"
-                    InputProps={{
-                        endAdornment: searchTerm && (
-                            <IconButton onClick={handleClearSearch} edge="end">
-                                <ClearIcon />
-                            </IconButton>
-                        ),
-                    }}
-                    fullWidth
-                />
+
+            <Box className="search-and-filter-container" marginY={2}>
+                <Grid container spacing={2} alignItems="center">
+                    <Grid item xs={12} sm={8}>
+                        <TextField
+                            label="Search by Disease Name"
+                            variant="outlined"
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            className="search-bar"
+                            fullWidth
+                            InputProps={{
+                                endAdornment: searchTerm && (
+                                    <IconButton onClick={handleClearSearch} edge="end">
+                                        <ClearIcon />
+                                    </IconButton>
+                                ),
+                            }}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12} sm={4}>
+                        <FormControl fullWidth>
+                            <InputLabel>Sort by</InputLabel>
+                            <Select value={sortOption} onChange={handleSortChange}>
+                                <MenuItem value="alphabetical">Alphabetical Order</MenuItem>
+                                <MenuItem value="createdDate">Created Date</MenuItem>
+                                <MenuItem value="updatedDate">Updated Date</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                </Grid>
             </Box>
+
             {loading ? (
                 <Box className="loading-container">
                     <Skeleton variant="rectangular" width="100%" height={200} />
@@ -88,14 +137,10 @@ const RemedyListView = () => {
                     {error}
                 </Typography>
             ) : (
-                <Box display="flex" flexWrap="wrap" gap={3} justifyContent="center">
+                <Grid container spacing={3}>
                     {filteredRemedies.length ? (
-                        filteredRemedies.map(remedy => (
-                            <Box
-                                key={remedy._id}
-                                width={{ xs: '100%', sm: '45%', md: '30%' }}
-                                maxWidth={300}
-                            >
+                        filteredRemedies.map((remedy) => (
+                            <Grid item xs={12} sm={6} md={4} lg={3} key={remedy._id}>
                                 <Card className="remedy-card" onClick={() => handleCardClick(remedy._id)}>
                                     {remedy.image ? (
                                         <CardMedia
@@ -121,29 +166,36 @@ const RemedyListView = () => {
                                             variant="body2"
                                             className="remedy-card-text"
                                         >
-                                            {remedy.symptoms.slice(0, 100)}...
+                                            {remedy.symptoms.slice(0, 50)}...
                                         </Typography>
+                                        <Box className="remedy-card-dates">
+                                            <Typography variant="caption" className="remedy-card-date">
+                                                Created At: {formatDate(remedy.createdAt)}
+                                            </Typography>
+                                            <Typography variant="caption" className="remedy-card-date">
+                                                Updated At: {formatDate(remedy.updatedAt)}
+                                            </Typography>
+                                        </Box>
+
                                     </CardContent>
-                                    <CardActions className="remedy-card-actions" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <CardActions className="remedy-card-actions">
                                         <Button
                                             size="small"
+                                            color="primary"
                                             className="remedy-card-button"
                                         >
                                             Learn More
                                         </Button>
-                                        <Rating
-                                            name={`rating-${remedy._id}`}
-                                            value={remedy.rating || 0} // Display rating or default to 0
-                                            readOnly
-                                        />
                                     </CardActions>
                                 </Card>
-                            </Box>
+                            </Grid>
                         ))
                     ) : (
-                        <Typography>No remedies found.</Typography>
+                        <Typography variant="h6" textAlign="center" width="100%">
+                            No remedies found.
+                        </Typography>
                     )}
-                </Box>
+                </Grid>
             )}
         </Box>
     );

@@ -1,15 +1,15 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const remediationSchema = new mongoose.Schema({
+const RemediationSchema = new mongoose.Schema({
     diseaseName: { type: String, required: true },
     symptoms: { type: String, required: true },
     steps: { type: String, required: true },
     materials: { type: String, required: true },
-    youtubeTutorial: { type: String, required: false },
-    notes: { type: String, required: false },
-    image: { type: String, required: false },
-});
+    youtubeTutorial: { type: String },
+    notes: { type: String },
+    image: { type: String }
+}, { timestamps: true });  
 
-const RemediationModel = mongoose.model('Remediation', remediationSchema);
+const RemediationModel = mongoose.model('Remediation', RemediationSchema);
 
 export default RemediationModel;
