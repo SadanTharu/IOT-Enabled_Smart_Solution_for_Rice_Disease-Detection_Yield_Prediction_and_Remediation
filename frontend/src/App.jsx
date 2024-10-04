@@ -11,6 +11,7 @@ import Profile from './components/User Profile/profile'
 
 const App = () => {
   const [showLogin,setShowLogin] = useState(false)
+  const url = "http://localhost:4000"
 
   return (
     <>
