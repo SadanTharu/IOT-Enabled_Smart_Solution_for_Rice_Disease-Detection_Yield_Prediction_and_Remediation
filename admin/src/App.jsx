@@ -6,7 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Disease from './pages/Disease/Disease';
 import Remedies from './pages/Treat/TreatmentDashboard';
-import User from './pages/User/User';
+import Inquiries from './pages/Inquiry/Inquiry';
 import Prediction from './pages/Prediction/Prediction';
 import AddDesease from "./pages/AddDesease/AddDesease";
 import DeseaseList from "./pages/deseaseList/deseaseList";
@@ -30,7 +30,7 @@ const App = () => {
       <div className="app-content">
         <Sidebar />
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard url={url} />} />
           <Route path="/disease" element={<Disease url={url} />} />
           <Route path="/adddesease" element={<AddDesease url={url} />} />
           <Route path="/list" element={<DeseaseList url={url} />} />
@@ -40,7 +40,7 @@ const App = () => {
           <Route path="/remedy/:id" element={<RemedyDetail url={url} />} />
           <Route path="/edit-remedy/:id" element={<EditRemedy url={url} />} />
           <Route path="/RemedyReport" element={<RemedyReport url={url} />} />
-          <Route path="/user" element={<User />} />
+          <Route path="/Inquiries" element={<Inquiries />} />
           <Route path="/prediction" element={<Prediction />} />
           <Route
             path="/deseaseinfo"
