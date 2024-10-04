@@ -9,6 +9,10 @@ const DiseaseDisplay = ({ category }) => {
   return (
     <div className="food-display" id="diseases-display">
       <h1>Currently Discovered Disease Information</h1>
+      <p>
+        “Disease severity is measured on a scale from 1 to 10, where ‘1’
+        represents the lowest spread rate and ‘10’ indicates the highest.”
+      </p>
       <div className="food-display-list">
         {disease_list.map((item) => {
           if (category === "All" || category === item.category) {

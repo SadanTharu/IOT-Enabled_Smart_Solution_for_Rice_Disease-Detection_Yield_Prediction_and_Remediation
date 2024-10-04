@@ -9,7 +9,7 @@ const UpdateDisease = ({ url = "http://localhost:4000" }) => {
   const navigate = useNavigate(); // For navigation
   const [diseaseData, setDiseaseData] = useState({
     diseaseName: "",
-    category: "",
+    category: "", // Initialize category
     severityLevel: 1, // Set initial severity level to 1
     image: null, // To store the selected image file
   });
@@ -81,14 +81,21 @@ const UpdateDisease = ({ url = "http://localhost:4000" }) => {
           />
         </div>
         <div>
-          <label>Category:</label>
-          <input
-            type="text"
+          <label>Disease Category:</label>
+          <select
             name="category"
             value={diseaseData.category}
             onChange={handleChange}
             required
-          />
+          >
+            <option value="">Select a category</option>
+            <option value="BacterialBlind">Bacterial Blind</option>
+            <option value="bacterialLeafSteak">Bacterial Leaf Steak</option>
+            <option value="brownSpot">Brown Spot</option>
+            <option value="raggedStunt">Ragged Stunt</option>
+            <option value="riceBlast">Rice Blast</option>
+            <option value="tungro">Tungro</option>
+          </select>
         </div>
         <div>
           <label>Severity Level:</label>

@@ -7,7 +7,7 @@ const ExploreDeseases = ({ category, setCategory }) => {
     <div className="explore-menu" id="diseases">
       <h1>Explore Diseases</h1>
       <p className="explore-menu-text">
-        Choose from a list of diseases for detailed information...
+        These are the common diseases found in paddy fields...
       </p>
       <div className="explore-menu-list">
         {disease_menu_list.map((item, index) => {
@@ -27,7 +27,7 @@ const ExploreDeseases = ({ category, setCategory }) => {
                 alt=""
               />
               <p>{item.disease_name}</p>
-              <span>{item.case_count} cases</span>{" "}
+              <span>{item.case_count} Disease</span>{" "}
               {/* Displaying case count instead of price */}
             </div>
           );

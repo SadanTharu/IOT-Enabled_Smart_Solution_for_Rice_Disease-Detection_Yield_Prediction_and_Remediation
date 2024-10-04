@@ -81,4 +81,32 @@
    cursor: pointer;
 }
 
+/* Styles for the select dropdown */
+.update-disease select {
+   padding: 10px;
+   border-radius: 5px;
+   border: 1px solid #ddd;
+   font-size: 16px;
+   background-color: white; /* Background color */
+   color: #333; /* Text color */
+   transition: border-color 0.3s; /* Smooth transition for border color */
+   cursor: pointer; /* Change cursor to pointer */
+}
+
+/* Change border color on focus */
+.update-disease select:focus {
+   border-color: rgb(101, 100, 100); /* Change border color on focus */
+   outline: none; /* Remove default outline */
+}
+
+/* Option styling */
+.update-disease select option {
+   padding: 10px; /* Padding for options */
+}
+
+/* Hover effect for the select */
+.update-disease select:hover {
+   border-color: rgb(101, 100, 100); /* Change border color on hover */
+}
+
 
