@@ -80,7 +80,11 @@ const DeseaseList = ({ url }) => {
                 src={assets.delete_icon}
                 alt="Delete"
                 className="delete-icon"
-                onClick={() => removeDesease(item._id)}
+                onClick={() => {
+                  if (window.confirm('Are you sure you want to delete this item?')) {
+                    removeDesease(item._id); // Call the delete function if confirmed
+                  }
+                }}
               />
             </div>
           ))
