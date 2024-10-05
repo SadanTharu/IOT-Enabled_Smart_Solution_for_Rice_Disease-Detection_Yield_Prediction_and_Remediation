@@ -12,22 +12,22 @@ const Disease = () => {
       <div className="diseasetopiccontainner-2-main">
         <div className="disease-actions-main">
           <Link to="/adddesease" className="disease-action-main">
-            <img src={assets.dashboard_icon} alt="" />
+            <img src={assets.addDisease} alt="" />
 
             <p>Add New Disease</p>
           </Link>
           <Link to="/list" className="disease-action-main">
-            <img src={assets.disease_icon} alt="" />
+            <img src={assets.viewAdded} alt="" />
 
             <p>View Added Diseases</p>
           </Link>
           <Link to="/deseaseinfo" className="disease-action-main">
-            <img src={assets.disease_icon} alt="" />
+            <img src={assets.newDiscovered} alt="" />
 
             <p>Newly Discovered</p>
           </Link>
           <Link to="/contactremedy" className="disease-action-main">
-            <img src={assets.user_icon} alt="" />
+            <img src={assets.remedy} alt="" />
 
             <p>Remedy Managemnt</p>
           </Link>

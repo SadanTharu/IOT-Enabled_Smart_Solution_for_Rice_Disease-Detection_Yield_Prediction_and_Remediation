@@ -3,7 +3,7 @@ import { addDisease } from '../controllers/diseaseController.js';
 import { diseaseList } from '../controllers/diseaseController.js';
 import { removeDisease } from '../controllers/diseaseController.js';
 import {getDiseasesWithoutRemedies } from '../controllers/diseaseController.js'
-
+import{updateDisease} from '../controllers/diseaseController.js';
 
 import multer from 'multer';
 
@@ -23,7 +23,7 @@ diseaseRouter.post("/add",upload.single("image"),addDisease)
 diseaseRouter.get("/list",diseaseList)
 diseaseRouter.post("/remove",removeDisease)
 diseaseRouter.get("/diseaseListWithoutRemedies",getDiseasesWithoutRemedies)
-
+diseaseRouter.put("/update/:id", upload.single("image"), updateDisease);
 
 
 

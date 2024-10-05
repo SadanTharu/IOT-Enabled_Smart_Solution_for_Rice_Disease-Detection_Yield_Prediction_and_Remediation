@@ -6,7 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Disease from './pages/Disease/Disease';
 import Remedies from './pages/Treat/TreatmentDashboard';
-import User from './pages/User/User';
+import Inquiries from './pages/Inquiry/Inquiry';
 import Prediction from './pages/Prediction/Prediction';
 import AddDesease from "./pages/AddDesease/AddDesease";
 import DeseaseList from "./pages/deseaseList/deseaseList";
@@ -18,6 +18,7 @@ import RemedyReport from './pages/Treat/RemedyReport';
 import MsgList from './pages/Treat/msgList';
 import ContctRemedyManagement from "./pages/ContctRemedyManagement/ContactRemedyManagement";
 import ViewDiseaseInquiry from "./pages/ViewDiseaseInquiry/ViewDiseaseInquiry";
+import UpdateDisease from './pages/Disease/UpdateDisease/UpdateDisease'
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
@@ -31,7 +32,7 @@ const App = () => {
       <div className="app-content">
         <Sidebar />
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard url={url} />} />
           <Route path="/disease" element={<Disease url={url} />} />
           <Route path="/adddesease" element={<AddDesease url={url} />} />
           <Route path="/list" element={<DeseaseList url={url} />} />
@@ -43,15 +44,11 @@ const App = () => {
           <Route path="/RemedyReport" element={<RemedyReport url={url} />} />
           <Route path="/msgList" element={<MsgList url={url} />} />
           <Route path="/user" element={<User />} />
+          <Route path="/Inquiries" element={<Inquiries />} />
           <Route path="/prediction" element={<Prediction />} />
-          <Route
-            path="/deseaseinfo"
-            element={<ViewDiseaseInquiry url={url} />}
-          />
-          <Route
-            path="/contactremedy"
-            element={<ContctRemedyManagement url={url} />}
-          />
+          <Route path="/deseaseinfo" element={<ViewDiseaseInquiry url={url} />} />
+          <Route path="/contactremedy" element={<ContctRemedyManagement url={url} />} />
+          <Route path="/update/:id" element={<UpdateDisease url={url} />} />
         </Routes>
       </div>
     </div>

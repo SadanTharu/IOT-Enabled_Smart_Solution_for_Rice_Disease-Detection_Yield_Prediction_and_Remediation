@@ -45,6 +45,8 @@ const Navbar = ({setShowLogin}) => {
           Diseases
         </a>
         <Link to="/Remedies" onClick={() => setMenu("remedies")} className={menu === "remedies" ? "active" : ""} >Remedies</Link>
+        
+        <Link to="/Inquirie" onClick={() => setMenu("inquiries")} className={menu === "inquiries" ? "active" : ""} >Inquiries</Link>
         <a
           href="#contact-us"
           onClick={() => setMenu("contact-us")}
@@ -55,20 +57,8 @@ const Navbar = ({setShowLogin}) => {
       </ul>
       {!token?<button onClick={()=>setShowLogin(true)}>sign in</button>
          :  <div className="navbar-profile">
-                <img src={assets.profile_icon} alt="" />
-                <ul className="navbar-profile-dropdown">
-                  <li onClick={()=>navigate('/profile')}>
-                      <img src={assets.profile} alt="" />
-                      <p>My Profile</p>
-                  </li>
-                
-                  
-                  <hr />
-                  <li onClick={logout}>
-                      <img src={assets.logout_icon} alt="" />
-                      <p>Logout</p>
-                  </li>
-                </ul>
+              <img src={assets.logout_icon} alt=""  onClick={logout}/>
+              <p>Logout</p>
            </div> 
           }
     </div>

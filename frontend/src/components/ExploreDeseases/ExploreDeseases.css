@@ -23,6 +23,7 @@
     text-align: center;
     margin: 20px 0px;
     overflow-x: scroll;
+    overflow: hidden;
 }
 .explore-menu-list ::-webkit-scrollbar{
     display: none;

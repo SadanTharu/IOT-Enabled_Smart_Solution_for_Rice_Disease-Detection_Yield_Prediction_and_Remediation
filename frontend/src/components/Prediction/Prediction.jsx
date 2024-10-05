@@ -97,8 +97,16 @@ const Prediction = () => {
               value={data.Year}
               type='number'
               name='Year'
-              placeholder='Enter Year'
+              placeholder='Enter Year (1980-2080)'
               required
+              min='1980'
+              max='2080'
+              onInput={(e) => {
+                const value = e.target.value;
+                if (value.length > 4) {
+                  e.target.value = value.slice(0, 4);
+                }
+              }}
             />
           </div>
           <div className='formside'>
@@ -108,19 +116,32 @@ const Prediction = () => {
               value={data.average_rain_fall_mm_per_year}
               type='number'
               name='average_rain_fall_mm_per_year'
-              placeholder='Average Rainfall (mm)'
+              placeholder='Average Rainfall (0-5000)'
               required
+              min='0'
+              max='5000'
+              onInput={(e) => {
+                if (e.target.value < 0) {
+                  e.target.value = '';
+                }
+              }}
             />
           </div>
           <div className='formside'>
-            <p>Pesticides (tonnes)</p>
+            <p>Pesticides (Tonnes)</p>
             <input
               onChange={onChangeHandler}
               value={data.pesticides_tonnes}
               type='number'
               name='pesticides_tonnes'
-              placeholder='Pesticides (tonnes)'
+              placeholder='Pesticides (Tonnes)'
               required
+              min='0'
+              onInput={(e) => {
+                if (e.target.value < 0) {
+                  e.target.value = '';
+                }
+              }}
             />
           </div>
           <div className='formside'>
@@ -130,8 +151,17 @@ const Prediction = () => {
               value={data.avg_temp}
               type='number'
               name='avg_temp'
-              placeholder='Average Temperature (°C)'
+              placeholder='Average Temperature (-50°C to 60°C)'
               required
+              min='-50'
+              max='60'
+              onInput={(e) => {
+                if (e.target.value < -50) {
+                  e.target.value = '-50';
+                } else if (e.target.value > 60) {
+                  e.target.value = '60';
+                }
+              }}
             />
           </div>
           <div className='formside'>
@@ -161,7 +191,7 @@ const Prediction = () => {
           </button>
           {prediction && (
             <div className='prediction-result'>
-              <h3>Predicted Yield: {prediction}</h3>
+              <h3>Predicted Yield: {prediction} Tonnes</h3>
             </div>
           )}
         </form>

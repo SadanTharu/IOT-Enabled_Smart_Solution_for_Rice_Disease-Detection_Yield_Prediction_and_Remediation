@@ -18,7 +18,7 @@ const Footer = () => {
         <div className="footer-content-center">
           <h2>COMPANY</h2>
           <ul>
-            <li>Home</li>
+            <li onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Home</li>
             <li>About Us</li>
             <li>Pivacy Policy</li>
           </ul>

@@ -19,13 +19,9 @@ const Sidebar = () => {
           <img src={assets.treat_icon} alt="" />
           <p>Remedy Management</p>
         </NavLink>
-        <NavLink to="/user" className="sidebar-option">
+        <NavLink to="/Inquiries" className="sidebar-option">
           <img src={assets.user_icon} alt="" />
-          <p>User Management</p>
-        </NavLink>
-        <NavLink to="/prediction" className="sidebar-option">
-          <img src={assets.prediction_icon} alt="" />
-          <p>Prediction Management</p>
+          <p>Inquiry Management</p>
         </NavLink>
       </div>
     </div>
