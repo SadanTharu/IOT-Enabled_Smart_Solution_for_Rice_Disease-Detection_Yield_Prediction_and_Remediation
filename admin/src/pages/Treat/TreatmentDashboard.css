@@ -87,18 +87,8 @@
   font-weight: bold;
 }
 
-.add-remedy-button {
-  margin-left: 10px;
-  padding: 5px 10px;
-  background-color: #4CAF50; /* Green background */
-  color: white; /* White text */
-  text-decoration: none; /* Remove underline */
-  border-radius: 5px; /* Rounded corners */
-}
 
-.add-remedy-button:hover {
-  background-color: #45a049; /* Darker green on hover */
-}
+
 
 .diseases-container {
   margin-top: 20px;
@@ -127,17 +117,7 @@
   justify-content: space-between; /* Space between text and link */
 }
 
-.add-remedy-button {
-  background-color: #4caf50; /* Green background */
-  color: white; /* White text */
-  padding: 5px 10px; /* Padding for button */
-  border-radius: 4px; /* Rounded corners */
-  text-decoration: none; /* Remove underline */
-}
 
-.add-remedy-button:hover {
-  background-color: #45a049; /* Darker green on hover */
-}
 
 
 

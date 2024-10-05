@@ -36,7 +36,7 @@ connectDB();
 app.use("/api/disease",diseaseRouter)
 app.use("/images",express.static('uploads'))
 
-app.use("/api/contactRemedy",diseaseRouterforRemedy)
+app.use("/api/contactRemedy",diseaseRouterforRemedy);
 app.use("/api/diseaseInquiry", awa_diseaseRoute);
 //sadan
 app.use("/api/prediction",predictionRouter)

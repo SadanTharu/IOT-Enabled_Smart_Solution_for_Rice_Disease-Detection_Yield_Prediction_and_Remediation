@@ -54,15 +54,20 @@ const removeDisease = async (req,res)=>{
 }
 
 // Fetch diseases without remedies
-const diseaseListWithoutRemedies = async (req, res) => {
+const getDiseasesWithoutRemedies = async (req, res) => {
     try {
-        const diseases = await diseaseModel.find({ hasRemedy: false });
-        res.json({ success: true, data: diseases });
+      // Fetch all diseases with optional remedies population if necessary
+      const diseases = await diseaseModel.find({}, 'diseaseName symptoms hasRemedy').exec(); // Fetch only diseaseName, symptoms, and hasRemedy fields
+      
+      // Filter diseases without remedies
+      const diseasesWithoutRemedies = diseases.filter(disease => !disease.hasRemedy);
+      
+      res.status(200).json({ success: true, data: diseasesWithoutRemedies });
     } catch (error) {
-        console.error(error);
-        res.json({ success: false, message: "Error fetching diseases" });
+      console.log(error);
+      res.status(500).json({ message: 'Error fetching diseases without remedies', error });
     }
-};
+  };
+  
 
-
-export {addDisease,diseaseList,removeDisease, diseaseListWithoutRemedies }
+export {addDisease,diseaseList,removeDisease, getDiseasesWithoutRemedies }

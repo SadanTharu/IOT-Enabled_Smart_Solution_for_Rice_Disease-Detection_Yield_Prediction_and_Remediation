@@ -4,7 +4,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Typography, Card, CardContent, CardMedia, Button, CircularProgress, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { toast } from 'react-toastify';
 import './RemedyDetail.css';
 
 const RemedyDetail = ({ url }) => {
@@ -42,12 +41,14 @@ const RemedyDetail = ({ url }) => {
     const handleConfirmDelete = async () => {
         try {
             await axios.delete(`${url}/api/remediation/${id}`);
-            toast.success('Remedy deleted successfully!');
+            // Remove the toast notification
+            // toast.success('Remedy deleted successfully!');
             setOpenDialog(false);
             navigate('/RemedyList');
         } catch (error) {
             console.error('Error deleting remedy:', error);
-            toast.error(`Error deleting remedy: ${error.response?.data?.error || error.message}`);
+            // Remove the toast notification
+            // toast.error(`Error deleting remedy: ${error.response?.data?.error || error.message}`);
         }
     };
 

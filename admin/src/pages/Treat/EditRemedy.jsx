@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import './EditRemedy.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { IconButton, Box, Grid, TextField, Button } from '@mui/material';
@@ -48,7 +46,7 @@ const EditRemedy = ({ url }) => {
         setImage(e.target.files[0]);
     };
 
-    //form data fields validations
+    // Form data fields validations
     const validate = () => {
         const newErrors = {};
         if (!remediation.diseaseName) newErrors.diseaseName = 'Disease name is required.';
@@ -88,19 +86,9 @@ const EditRemedy = ({ url }) => {
                 },
             });
             localStorage.removeItem('remedies');
-            toast.success('Remediation updated successfully!', {
-                autoClose: 1000,
-                onClose: () => {
-                    navigate(-1);
-                }
-            });
+            navigate(-1);
         } catch (error) {
             console.error('Error updating remediation:', error);
-            if (error.response && error.response.data) {
-                toast.error('Error updating remediation: ' + error.response.data.error);
-            } else {
-                toast.error('Error updating remediation: ' + error.message);
-            }
         }
     };
 
@@ -232,12 +220,10 @@ const EditRemedy = ({ url }) => {
                             >
                                 Cancel
                             </Button>
-
                         </div>
                     </Grid>
                 </Grid>
             </form>
-            <ToastContainer />
         </div>
     );
 };
