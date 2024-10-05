@@ -34,6 +34,7 @@ const App = () => {
         <Sidebar />
         <Routes>
           <Route path="/dashboard" element={<Dashboard url={url} />} />
+          <Route path="/" element={<Disease url={url} />} />
           <Route path="/disease" element={<Disease url={url} />} />
           <Route path="/adddesease" element={<AddDesease url={url} />} />
           <Route path="/list" element={<DeseaseList url={url} />} />

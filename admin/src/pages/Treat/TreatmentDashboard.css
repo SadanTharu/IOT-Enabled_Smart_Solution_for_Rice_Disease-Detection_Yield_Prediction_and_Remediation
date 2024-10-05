@@ -117,7 +117,15 @@
   justify-content: space-between; /* Space between text and link */
 }
 
+.add-remedy-button {
+  background-color: #4CAF50;
+  max-width: 100px;
+}
 
+.add-remedy-button:hover {
+  background-color: #45a049;
+}
 
-
-
+.add-remedy-button p{
+  color: #ffffff;
+}

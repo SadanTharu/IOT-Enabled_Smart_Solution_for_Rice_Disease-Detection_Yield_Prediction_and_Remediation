@@ -123,7 +123,7 @@ const TreatmentDashboard = ({ url }) => {
                                                 onClick={() => handleAddRemedy(disease)}
                                                 className="add-remedy-button"
                                             >
-                                                Add Remedy
+                                                <p>Add Remedy</p>
                                             </button>
                                         </li>
                                     ))}
