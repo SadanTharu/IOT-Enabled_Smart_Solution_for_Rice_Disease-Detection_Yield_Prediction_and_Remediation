@@ -1,5 +1,5 @@
 import express from 'express';
-import { addDiseaseForRemedyMng } from '../controllers/contactRemedyController.js';
+import { addDiseaseForRemedyMng,getAllmessages , deleteMessage} from '../controllers/contactRemedyController.js';
 import multer from 'multer';
 
 const diseaseRouterforRemedy = express.Router();
@@ -15,7 +15,9 @@ const storage = multer.diskStorage({
 const upload = multer({storage:storage})
 
 
-diseaseRouterforRemedy.post("/addDataForRemedy",upload.single("image") ,addDiseaseForRemedyMng)
+diseaseRouterforRemedy.post("/addDataForRemedy",upload.single("image") ,addDiseaseForRemedyMng);
+diseaseRouterforRemedy.get('/messages', getAllmessages);
+diseaseRouterforRemedy.delete('/messages/:id', deleteMessage);
 
 
 export default diseaseRouterforRemedy

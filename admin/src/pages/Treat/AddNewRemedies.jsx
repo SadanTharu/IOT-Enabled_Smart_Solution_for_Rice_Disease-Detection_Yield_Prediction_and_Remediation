@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
 import './AddNewRemedies.css';
 
 const AddNewRemedies = () => {
-    const [remediation, setRemediation] = useState({
-        diseaseName: '',
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const initialState = {
+        diseaseName: location.state?.diseaseName || '',
         symptoms: '',
         steps: '',
         materials: '',
         youtubeTutorial: '',
         notes: '',
-    });
+    };
+
+    const [remediation, setRemediation] = useState(initialState);
     const [image, setImage] = useState(null);
     const [errors, setErrors] = useState({});
-    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,7 +27,7 @@ const AddNewRemedies = () => {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        //Image Type, size validation
+        // Image Type, size validation
         if (file) {
             if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.type)) {
                 setErrors((prevErrors) => ({
@@ -42,14 +44,11 @@ const AddNewRemedies = () => {
                 return;
             }
             setImage(file);
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                image: '',
-            }));
+            setErrors((prevErrors) => ({ ...prevErrors, image: '' }));
         }
     };
 
-    //Form Data field Validations
+    // Form Data field Validations
     const validate = () => {
         const newErrors = {};
         if (!remediation.diseaseName) newErrors.diseaseName = 'Disease name is required.';
@@ -87,31 +86,20 @@ const AddNewRemedies = () => {
                 },
             });
             console.log('Response:', response.data);
-
-            toast.success('Remediation added successfully!', {
-                autoClose: 1000,
-                onClose: () => {
-                    navigate('/RemedyList');
-                }
-            });
-
-            setRemediation({
-                diseaseName: '',
-                symptoms: '',
-                steps: '',
-                materials: '',
-                youtubeTutorial: '',
-                notes: '',
-            });
+            setRemediation(initialState);
             setImage(null);
             setErrors({});
+            navigate('/RemedyList');
         } catch (error) {
             console.error('Error response:', error.response);
-            toast.error('Error adding remediation: ' + (error.response ? error.response.data.error : error.message));
+            alert('Error adding remediation: ' + (error.response ? error.response.data.error : error.message));
         }
     };
 
     const handleCancel = () => {
+        setRemediation(initialState); 
+        setImage(null);
+        setErrors({});
         navigate('/RemedyList');
     };
 
@@ -128,6 +116,7 @@ const AddNewRemedies = () => {
                         value={remediation.diseaseName}
                         onChange={handleChange}
                         placeholder="Enter disease name" 
+                        aria-invalid={errors.diseaseName ? 'true' : 'false'}
                     />
                     {errors.diseaseName && <p className="error-text">{errors.diseaseName}</p>}
                 </div>
@@ -139,6 +128,7 @@ const AddNewRemedies = () => {
                         value={remediation.symptoms}
                         onChange={handleChange}
                         placeholder="Enter symptoms here..." 
+                        aria-invalid={errors.symptoms ? 'true' : 'false'}
                     />
                     {errors.symptoms && <p className="error-text">{errors.symptoms}</p>}
                 </div>
@@ -150,6 +140,7 @@ const AddNewRemedies = () => {
                         value={remediation.steps}
                         onChange={handleChange}
                         placeholder="Outline the remediation steps..."
+                        aria-invalid={errors.steps ? 'true' : 'false'}
                     />
                     {errors.steps && <p className="error-text">{errors.steps}</p>}
                 </div>
@@ -161,6 +152,7 @@ const AddNewRemedies = () => {
                         value={remediation.materials}
                         onChange={handleChange}
                         placeholder="List materials needed..."
+                        aria-invalid={errors.materials ? 'true' : 'false'}
                     />
                     {errors.materials && <p className="error-text">{errors.materials}</p>}
                 </div>
@@ -173,6 +165,7 @@ const AddNewRemedies = () => {
                         value={remediation.youtubeTutorial}
                         onChange={handleChange}
                         placeholder="Enter a valid URL..."
+                        aria-invalid={errors.youtubeTutorial ? 'true' : 'false'}
                     />
                     {errors.youtubeTutorial && <p className="error-text">{errors.youtubeTutorial}</p>}
                 </div>
@@ -187,7 +180,7 @@ const AddNewRemedies = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="image">Upload Image:</label>
+                    <label htmlFor="image">Upload Image: (png/jpg/gif)    </label>
                     <input
                         type="file"
                         name="image"
@@ -202,7 +195,6 @@ const AddNewRemedies = () => {
                     <button type="button" className="cancel-button" onClick={handleCancel}>Cancel</button>
                 </div>
             </form>
-            <ToastContainer />
         </div>
     );
 };

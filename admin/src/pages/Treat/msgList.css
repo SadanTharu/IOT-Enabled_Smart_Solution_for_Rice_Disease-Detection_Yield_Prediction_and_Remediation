@@ -1,0 +1,84 @@
+/* MsgList.css */
+.chat-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.chat-bubble {
+    background-color: #dcf8c6; /* Light green similar to WhatsApp */
+    padding: 15px;
+    border-radius: 10px;
+    width: 90%;
+    margin-left: auto; /* Align to the right like a chat bubble */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    word-wrap: break-word;
+}
+
+.chat-bubble h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #075E54; /* WhatsApp text color */
+}
+
+.chat-bubble p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.remedy-image {
+    width: 100%;
+    max-width: 150px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+/* Align the h3 title a bit better */
+.chat-bubble h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #075E54;
+}
+
+/* Footer or timestamps (optional) */
+.chat-timestamp {
+    font-size: 12px;
+    color: gray;
+    text-align: right;
+}
+
+
+/* Delete button styling */
+.delete-button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Hover effect for delete button */
+.delete-button:hover {
+    background-color: #c0392b;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+

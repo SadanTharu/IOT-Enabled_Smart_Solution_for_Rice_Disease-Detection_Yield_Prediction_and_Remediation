@@ -13,6 +13,7 @@ const addDisease = async (req,res)=>{
         severityLevel: req.body.severityLevel,
         category: req.body.category,
         image: image_filename,
+        hasRemedy: false,
 
     })
     try{
@@ -52,6 +53,22 @@ const removeDisease = async (req,res)=>{
     }
 }
 
+// Fetch diseases without remedies
+const getDiseasesWithoutRemedies = async (req, res) => {
+    try {
+      // Fetch all diseases with optional remedies population if necessary
+      const diseases = await diseaseModel.find({}, 'diseaseName symptoms hasRemedy').exec(); // Fetch only diseaseName, symptoms, and hasRemedy fields
+      
+      // Filter diseases without remedies
+      const diseasesWithoutRemedies = diseases.filter(disease => !disease.hasRemedy);
+      
+      res.status(200).json({ success: true, data: diseasesWithoutRemedies });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Error fetching diseases without remedies', error });
+    }
+  };
+  
 // Update disease
 const updateDisease = async (req, res) => {
     const id = req.params.id;  // Get the ID from the URL
@@ -87,4 +104,4 @@ const updateDisease = async (req, res) => {
 
 
 
-export {addDisease,diseaseList,removeDisease,updateDisease}
+export {addDisease,diseaseList,removeDisease,updateDisease, getDiseasesWithoutRemedies }

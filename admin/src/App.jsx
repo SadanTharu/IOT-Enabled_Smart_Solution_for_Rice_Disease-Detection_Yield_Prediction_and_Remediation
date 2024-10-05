@@ -15,6 +15,7 @@ import RemedyList from './pages/Treat/RemedyList';
 import RemedyDetail from './pages/Treat/RemedyDetail';
 import EditRemedy from './pages/Treat/EditRemedy';
 import RemedyReport from './pages/Treat/RemedyReport';
+import MsgList from './pages/Treat/msgList';
 import ContctRemedyManagement from "./pages/ContctRemedyManagement/ContactRemedyManagement";
 import ViewDiseaseInquiry from "./pages/ViewDiseaseInquiry/ViewDiseaseInquiry";
 import UpdateDisease from './pages/Disease/UpdateDisease/UpdateDisease'
@@ -41,6 +42,8 @@ const App = () => {
           <Route path="/remedy/:id" element={<RemedyDetail url={url} />} />
           <Route path="/edit-remedy/:id" element={<EditRemedy url={url} />} />
           <Route path="/RemedyReport" element={<RemedyReport url={url} />} />
+          <Route path="/msgList" element={<MsgList url={url} />} />
+          <Route path="/user" element={<User />} />
           <Route path="/Inquiries" element={<Inquiries />} />
           <Route path="/prediction" element={<Prediction />} />
           <Route path="/deseaseinfo" element={<ViewDiseaseInquiry url={url} />} />

@@ -2,18 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { PDFDownloadLink } from '@react-pdf/renderer'; // Import the PDF download link
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 
-// Styles for the PDF document
-// Styles for the PDF document
 const styles = StyleSheet.create({
     page: {
       padding: 30,
-      fontFamily: 'Courier', // Change to Courier for typewriter effect
+      fontFamily: 'Courier', 
     },
     header: {
       fontSize: 24,
       textAlign: 'center',
       marginBottom: 20,
-      fontFamily: 'Times-Roman', // Change to Courier
+      fontFamily: 'Times-Roman', 
     },
     section: {
       marginBottom: 15,
@@ -21,24 +19,24 @@ const styles = StyleSheet.create({
     subHeader: {
       fontSize: 16,
       marginBottom: 10,
-      fontFamily: 'Courier', // Change to Courier
+      fontFamily: 'Courier', 
     },
     row: {
-      flexDirection: 'row', // Align items horizontally (like table rows)
+      flexDirection: 'row', 
       marginBottom: 8,
     },
     cell: {
       fontSize: 12,
-      flex: 1, // Allows each cell to take equal space
-      paddingRight: 10, // Adds some space between cells
-      fontFamily: 'Courier', // Change to Courier
+      flex: 1, 
+      paddingRight: 10, 
+      fontFamily: 'Courier', 
     },
     headerCell: {
       fontSize: 14,
       fontWeight: 'bold',
       flex: 1,
       paddingBottom: 5,
-      fontFamily: 'Courier', // Change to Courier
+      fontFamily: 'Courier', 
     },
     footer: {
       position: 'absolute',
@@ -48,7 +46,7 @@ const styles = StyleSheet.create({
       right: 30,
       textAlign: 'center',
       color: 'grey',
-      fontFamily: 'Courier', // Change to Courier
+      fontFamily: 'Courier', 
     },
     pageNumber: {
       position: 'absolute',
@@ -57,7 +55,7 @@ const styles = StyleSheet.create({
       right: 30,
       textAlign: 'center',
       color: 'grey',
-      fontFamily: 'Courier', // Change to Courier
+      fontFamily: 'Courier', 
     },
   });
   
@@ -99,11 +97,11 @@ const MyDocument = ({ remedies }) => (
 
 const RemedyReport = ({ url }) => {
   const [remedies, setRemedies] = useState([]);
-  const [sortOption, setSortOption] = useState('alphabetical'); // State for sorting option
+  const [sortOption, setSortOption] = useState('alphabetical'); 
 
   // Function to fetch remedies data
   const fetchRemediesData = async () => {
-    const response = await fetch(`${url}/api/remediation/list`); // Adjust the URL as needed
+    const response = await fetch(`${url}/api/remediation/list`); 
     const data = await response.json();
     return data;
   };
@@ -127,7 +125,7 @@ const RemedyReport = ({ url }) => {
     };
 
     loadData();
-  }, [sortOption]); // Re-run the effect when sortOption changes
+  }, [sortOption]); 
 
   // Handle sorting option change
   const handleSortChange = (event) => {
@@ -138,7 +136,6 @@ const RemedyReport = ({ url }) => {
     <div style={containerStyle}>
       <h1 style={headerStyle}>Remedies Report</h1>
   
-      {/* Flex container for sorting filter and download button */}
       <div style={flexContainerStyle}>
         {/* Sorting Filter */}
         <div style={filterStyle}>
@@ -191,7 +188,7 @@ const containerStyle = {
     fontFamily: 'Arial, sans-serif',
     margin: '0 auto',
     padding: '20px',
-    width: '900px', // Increased width
+    width: '900px', 
     textAlign: 'center',
     backgroundColor: '#f9f9f9',
     borderRadius: '8px',

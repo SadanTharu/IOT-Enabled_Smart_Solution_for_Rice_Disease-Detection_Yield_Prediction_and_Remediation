@@ -35,8 +35,8 @@ connectDB();
 //api endpoints
 //matheesha
 app.use("/api/disease",diseaseRouter)
-app.use("/images",express.static('uploads'))
-app.use("/api/contactRemedy",diseaseRouterforRemedy)
+app.use("/images",express.static('uploads'));
+app.use("/api/contactRemedy",diseaseRouterforRemedy);
 app.use("/api/diseaseInquiry", awa_diseaseRoute);
 
 //sadan
