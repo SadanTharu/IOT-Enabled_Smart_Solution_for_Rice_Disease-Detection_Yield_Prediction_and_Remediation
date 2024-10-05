@@ -134,7 +134,7 @@ const TreatmentDashboard = ({ url }) => {
 
                     <RemediesPieChart dailyRemedies={dailyRemedies} />
                     <button onClick={viewmsg} className="add-remedy-button">
-                        Disease Updates from Disease Management
+                        <p>Disease Updates from Disease Management</p>
                     </button>
                 </div>
             </div>

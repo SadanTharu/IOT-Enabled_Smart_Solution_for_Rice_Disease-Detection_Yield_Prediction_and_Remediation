@@ -122,6 +122,10 @@
   max-width: 100px;
 }
 
+.add-remedy-button {
+  max-width: 300px;
+}
+
 .add-remedy-button:hover {
   background-color: #45a049;
 }
