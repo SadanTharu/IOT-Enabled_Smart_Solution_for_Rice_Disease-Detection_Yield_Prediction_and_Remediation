@@ -16,6 +16,7 @@ import RemedyDetail from './pages/Treat/RemedyDetail';
 import EditRemedy from './pages/Treat/EditRemedy';
 import RemedyReport from './pages/Treat/RemedyReport';
 import MsgList from './pages/Treat/msgList';
+import User from './pages/Inquiry/Inquiry'
 import ContctRemedyManagement from "./pages/ContctRemedyManagement/ContactRemedyManagement";
 import ViewDiseaseInquiry from "./pages/ViewDiseaseInquiry/ViewDiseaseInquiry";
 import UpdateDisease from './pages/Disease/UpdateDisease/UpdateDisease'
