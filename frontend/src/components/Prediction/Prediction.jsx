@@ -176,7 +176,7 @@ const Prediction = () => {
             </select>
           </div>
           <div className='formside'>
-            <p>Item (Crop)</p>
+            <p>Crop</p>
             <select onChange={onChangeHandler} name='Item' value={data.Item} required>
               <option value=''>Select Crop</option>
               {crops.map((crop) => (
@@ -191,7 +191,7 @@ const Prediction = () => {
           </button>
           {prediction && (
             <div className='prediction-result'>
-              <h3>Predicted Yield: {prediction} Tonnes</h3>
+              <h3>Predicted Yield: {prediction} Tonne</h3>
             </div>
           )}
         </form>
